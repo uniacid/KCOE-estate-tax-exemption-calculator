@@ -46,7 +46,7 @@ body {
 }
 
 /*inputs*/
-#msform input, #msform textarea {
+/* #msform input, #msform textarea {
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 0px;
@@ -68,23 +68,55 @@ body {
     -webkit-transition: All 0.5s ease-in;
     -moz-transition: All 0.5s ease-in;
     -o-transition: All 0.5s ease-in;
-}
+} */
 
 /*buttons*/
 #msform .action-button {
+    transition: color .1s ease-in-out,
+    background-color .1s ease-in-out;
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    border: 1px solid rgba(243,0,0,0);
+    border-style: solid;
+    border-width: 0;
+    background-clip: border-box;
+    border-color: #54bce3;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     width: 100px;
-    background: #ee0979;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 25px;
+    background: rgba(255,0,0,0);
+    color: #54bce3;
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px;
 }
 
 #msform .action-button:hover, #msform .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+    /* box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979; */
+    transition: color .1s ease-in-out,
+    background-color .1s ease-in-out;
+    color: #ffffff;
+    background: #54bce3;
+    border: 1px solid #48b0d7;
+    border-style: solid;
+    border-width: 0;
+    background-clip: border-box;
+    border-color: #004a9a;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 #msform .action-button-previous {

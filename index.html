@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="form.css">
     <title>KCOE Form</title>
 </head>
@@ -27,14 +27,70 @@
                         <input type="text" name="lname" placeholder="Last Name"/>
                         <input type="text" name="phone" placeholder="Phone"/> -->
                         <div class="form-group">
-                            <label for="netWorth">Estimated Net Worth - Today</label>
-                            <input type="text" id="netWorth" class="form-control" placeholder="Estimated Net Worth">
+                            <div class="row justify-content-between">
+                                <label for="netWorth">Estimated Net Worth - Today</label>
+                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" id="netWorth" class="form-control form-control-sm">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="priorExemption">Less: Exemption You Have Previously Used</label>
-                            <input type="text" id="priorExemption" class="form-control" placeholder="Estimated Net Worth">
+                            <div class="row justify-content-between">
+                                <label for="priorExemption">Less: Exemption You Have Previously Used</label>
+                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" id="priorExemption" class="form-control form-control-sm">
+                            </div>
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <div class="form-group">
+                            <label for="marriedOption">Are You Married?</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption1" value="option1">
+                                <label class="form-check-label" for="marriedOption1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption2" value="option2">
+                                <label class="form-check-label" for="marriedOption2">No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="spouseExemptionOption">Use Your Spouse's Exemption</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption1" value="option1">
+                                <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption2" value="option2">
+                                <label class="form-check-label" for="spouseExemptionOption2">No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row justify-content-between">
+                                <label for="priorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
+                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" id="priorSpouseExemption" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <input type="button" name="next" class="next action-button" value="Next"/>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <h2 class="fs-title">Social Profiles</h2>
@@ -42,8 +98,10 @@
                         <input type="text" name="twitter" placeholder="Twitter"/>
                         <input type="text" name="facebook" placeholder="Facebook"/>
                         <input type="text" name="gplus" placeholder="Google Plus"/>
-                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <div class="d-flex justify-content-center">
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                            <input type="button" name="next" class="next action-button" value="Next"/>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <h2 class="fs-title">Create your account</h2>
@@ -51,8 +109,10 @@
                         <input type="text" name="email" placeholder="Email"/>
                         <input type="password" name="pass" placeholder="Password"/>
                         <input type="password" name="cpass" placeholder="Confirm Password"/>
-                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                        <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                        <div class="d-flex justify-content-center">
+                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                            <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                        </div>
                     </fieldset>
                      <!-- progressbar -->
                     </form>
