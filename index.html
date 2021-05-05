@@ -17,140 +17,143 @@
         <!-- MultiStep Form -->
         <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-6">
-                <form id="msform">
-                    <h3 class="text-center">Lorem ipsum dolor sit amet, consectetur adip</h3>
-                    <h6 class="text-center">Quis nostrud exercitation</h6>
-                    <!-- fieldsets -->
-                    <!-- Step 1 -->
-                    <fieldset>
-                        <!-- <h2 class="fs-title">Personal Details</h2>
-                        <h3 class="fs-subtitle">Tell us something more about you</h3>
-                        <input type="text" name="fname" placeholder="First Name"/>
-                        <input type="text" name="lname" placeholder="Last Name"/>
-                        <input type="text" name="phone" placeholder="Phone"/> -->
-                        <div class="form-group">
-                            <div class="row justify-content-between">
-                                <label for="netWorth">Estimated Net Worth - Today</label>
-                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
-                            </div>
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" id="netWorth" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row justify-content-between">
-                                <label for="priorExemption">Less: Exemption You Have Previously Used</label>
-                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
-                            </div>
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" id="priorExemption" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="marriedOption">Are You Married?</label>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption1" value="option1">
-                                <label class="form-check-label" for="marriedOption1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption2" value="option2">
-                                <label class="form-check-label" for="marriedOption2">No</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="spouseExemptionOption">Use Your Spouse's Exemption</label>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption1" value="option1">
-                                <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption2" value="option2">
-                                <label class="form-check-label" for="spouseExemptionOption2">No</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row justify-content-between">
-                                <label for="priorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
-                                <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
-                            </div>
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" id="priorSpouseExemption" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row justify-content-center">
-                                <label for="priorSpouseExemption">Pre-nuptial agreement</label>
-                            </div>
-                            <div>
+                <form id="exemptionForm">
+                    <div id="exemptionFormContent">
+                        <h3 class="text-center">Lorem ipsum dolor sit amet, consectetur adip</h3>
+                        <h6 class="text-center">Quis nostrud exercitation</h6>
+                        <!-- fieldsets -->
+                        <!-- Step 1 -->
+                        <fieldset>
+                            <!-- <h2 class="fs-title">Personal Details</h2>
+                            <h3 class="fs-subtitle">Tell us something more about you</h3>
+                            <input type="text" name="fname" placeholder="First Name"/>
+                            <input type="text" name="lname" placeholder="Last Name"/>
+                            <input type="text" name="phone" placeholder="Phone"/> -->
+                            <div class="form-group">
                                 <div class="row justify-content-between">
-                                    <span>You</span>
-                                    <span>Spouse</span>
+                                    <label for="netWorth">Estimated Net Worth - Today</label>
+                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
                                 </div>
-                                <div class="input-range">
-                                    <input id="inputRange" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" id="netWorth" class="form-control form-control-sm">
                                 </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="row justify-content-between">
-                                    <span>50%</span>
-                                    <span>50%</span>
+                                    <label for="priorExemption">Less: Exemption You Have Previously Used</label>
+                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                </div>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" id="priorExemption" class="form-control form-control-sm">
                                 </div>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <input type="button" name="next" class="next action-button" value="Next"/>
-                        </div>
-                    </fieldset>
-                    <!-- Step 2 -->
-                    <fieldset>
-                        <div class="form-row mb-3">
-                            <div class="form-group col-md-6 mr-0">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="First">
+                            <div class="form-group">
+                                <label for="marriedOption">Are You Married?</label>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Last">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 mr-0">
-                                <label for="inputEmail">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <div class="justify-content-between">
-                                    <label for="inputPhone">Phone</label>
-                                    <span>(optional)</span>
+                            <div class="form-group">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption1" value="option1">
+                                    <label class="form-check-label" for="marriedOption1">Yes</label>
                                 </div>
-                                <input type="password" class="form-control" id="inputPhone" placeholder="(000) 000-0000">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption2" value="option2">
+                                    <label class="form-check-label" for="marriedOption2">No</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                            <input type="button" name="next" class="next action-button" value="Next"/>
-                        </div>
-                    </fieldset>
-                    <!-- Step 3 -->
-                    <fieldset>
-                        <div class="d-flex justify-content-center">
-                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                            <input type="submit" name="submit" class="submit action-button" value="Submit"/>
-                        </div>
-                    </fieldset>
-                     <!-- progressbar -->
-                    </form>
+                            <div class="form-group">
+                                <label for="spouseExemptionOption">Use Your Spouse's Exemption</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption1" value="option1">
+                                    <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption2" value="option2">
+                                    <label class="form-check-label" for="spouseExemptionOption2">No</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row justify-content-between">
+                                    <label for="priorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
+                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                </div>
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" id="priorSpouseExemption" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row justify-content-center">
+                                    <label for="priorSpouseExemption">Pre-nuptial agreement</label>
+                                </div>
+                                <div>
+                                    <div class="row justify-content-between">
+                                        <span>You</span>
+                                        <span>Spouse</span>
+                                    </div>
+                                    <div class="input-range">
+                                        <input id="inputRange" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <span>50%</span>
+                                        <span>50%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="button" name="next" class="next action-button" value="Next"/>
+                            </div>
+                        </fieldset>
+                        <!-- Step 2 -->
+                        <fieldset>
+                            <div class="form-row mb-3">
+                                <div class="form-group col-md-6 mr-0">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 mr-0">
+                                    <label for="inputEmail">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="justify-content-between">
+                                        <label for="inputPhone">Phone</label>
+                                        <span>(optional)</span>
+                                    </div>
+                                    <input type="password" class="form-control" id="inputPhone" placeholder="(000) 000-0000">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="button" name="next" class="next action-button" value="Next"/>
+                            </div>
+                        </fieldset>
+                        <!-- Step 3 -->
+                        <fieldset>
+                            <div class="d-flex justify-content-center">
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                            </div>
+                        </fieldset>
+                         <!-- progressbar -->
+                        </form>
+                    </div>
+
                     <ul id="progressbar">
                        <li class="active"></li>
                        <li></li>

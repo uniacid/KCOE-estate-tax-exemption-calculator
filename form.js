@@ -19,9 +19,8 @@ $(document).ready(function () {
         next_fs = $(this).parent().parent().next();
 
         //activate next step on progressbar using the index of next_fs
-        // $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-        // $("#progressbar").hide();
         //show the next fieldset
         next_fs.show();
         //hide the current fieldset with style
@@ -50,11 +49,15 @@ $(document).ready(function () {
             complete: function () {
                 current_fs.hide();
                 animating = false;
-                // $("#progressbar").show();
             },
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
         });
+        // var fieldsetHeight = $('fieldset:visible').height();
+        // var heightOffset = 80;
+        // fieldsetHeight = fieldsetHeight + heightOffset;
+        // $('#exemptionForm').css({height: fieldsetHeight});
+
     });
 
     $(".previous").click(function () {
@@ -65,9 +68,8 @@ $(document).ready(function () {
         previous_fs = $(this).parent().parent().prev();
 
         //de-activate current step on progressbar
-        // $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-        // $("#progressbar").hide();
         //show the previous fieldset
         previous_fs.show();
         //hide the current fieldset with style
@@ -92,13 +94,17 @@ $(document).ready(function () {
             },
             duration: 800,
             complete: function () {
-                // $("#progressbar").show();
                 current_fs.hide();
                 animating = false;
             },
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
         });
+        // var fieldsetHeight = $('fieldset:visible').height();
+        // var heightOffset = 80;
+        // fieldsetHeight = fieldsetHeight + heightOffset;
+        // $('#exemptionForm').css({height: fieldsetHeight});
+
     });
 
     $(".submit").click(function () {

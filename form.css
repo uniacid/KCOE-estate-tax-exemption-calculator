@@ -19,14 +19,14 @@ body {
 }
 
 /*form styles*/
-#msform {
+#exemptionForm {
     /* text-align: center; */
     position: relative;
     margin-top: 30px;
-    min-height: 300px;
+    min-height: 700px;
 }
 
-#msform fieldset {
+#exemptionForm fieldset {
     background: white;
     border: 0 none;
     border-radius: 0px;
@@ -41,12 +41,12 @@ body {
 }
 
 /*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
+#exemptionForm fieldset:not(:first-of-type) {
     display: none;
 }
 
 /*inputs*/
-/* #msform input, #msform textarea {
+/* #exemptionForm input, #exemptionForm textarea {
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 0px;
@@ -58,7 +58,7 @@ body {
     font-size: 13px;
 }
 
-#msform input:focus, #msform textarea:focus {
+#exemptionForm input:focus, #exemptionForm textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -71,7 +71,7 @@ body {
 } */
 
 /*buttons*/
-#msform .action-button {
+#exemptionForm .action-button {
     transition: color .1s ease-in-out,
     background-color .1s ease-in-out;
     font-family: Montserrat, sans-serif;
@@ -98,7 +98,7 @@ body {
     margin: 10px 5px;
 }
 
-#msform .action-button:hover, #msform .action-button:focus {
+#exemptionForm .action-button:hover, #exemptionForm .action-button:focus {
     /* box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979; */
     transition: color .1s ease-in-out,
     background-color .1s ease-in-out;
@@ -119,7 +119,7 @@ body {
     border-bottom-right-radius: 0px;
 }
 
-#msform .action-button-previous {
+#exemptionForm .action-button-previous {
     width: 100px;
     background: #C5C5F1;
     font-weight: bold;
@@ -131,7 +131,7 @@ body {
     margin: 10px 5px;
 }
 
-#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+#exemptionForm .action-button-previous:hover, #exemptionForm .action-button-previous:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
 }
 
