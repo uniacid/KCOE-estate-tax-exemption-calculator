@@ -16,7 +16,7 @@
     <div class="container-fluid h-100">
         <!-- MultiStep Form -->
         <div class="row no-gutters h-100 justify-content-center align-items-center">
-            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-4">
                 <form id="exemptionForm">
                     <h3 class="text-center">Lorem ipsum dolor sit amet</h3>
                     <h6 class="text-center">Lorem ipsum dolor sit amet, consectetur adip quis nostrud exercitation</h6>
@@ -33,7 +33,8 @@
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">$</div>
                                     </div>
-                                    <input type="text" id="netWorth" class="form-control form-control-sm">
+                                    <input type="text" id="netWorth" class="form-control form-control-sm" required
+                                    data-parsley-required-message="Estimated Net Worth required">
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -45,7 +46,8 @@
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">$</div>
                                     </div>
-                                    <input type="text" id="priorExemption" class="form-control form-control-sm">
+                                    <input type="text" id="priorExemption" class="form-control form-control-sm" required
+                                    data-parsley-required-message="Exemptions required">
                                 </div>
                             </div>
                             <div class="row no-gutters">
@@ -55,7 +57,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption1" value="yes">
+                                            <input class="form-check-input" type="radio" name="marriedOption" id="marriedOption1" value="yes" required
+                                            data-parsley-required-message="We need to know if you are married">
                                             <label class="form-check-label" for="marriedOption1">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -64,9 +67,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="inputSpouseExemptionOption col-md-4 d-none">
+                                <div class="inputSpouseExemptionOption col-md-6 offset-1 d-none">
                                     <div class="form-group">
-                                        <label class="formLabel" for="spouseExemptionOption">Use Your Spouse's Exemption</label>
+                                        <label class="formLabel" for="spouseExemptionOption">Use Spouse's Exemption</label>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
@@ -81,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="priorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
                                     <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
@@ -93,7 +96,7 @@
                                     <input type="text" id="priorSpouseExemption" class="form-control form-control-sm">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-center">
                                     <label class="formLabel" for="priorSpouseExemption">Pre-nuptial agreement</label>
                                 </div>
@@ -119,17 +122,17 @@
                         <fieldset>
                             <div class="form-row mb-3">
                                 <div class="form-group col-md-6">
-                                    <label class="formLabel" for="firstName">First Name</label>
+                                    <label class="formLabel" for="firstName" required>First Name</label>
                                     <input type="text" class="form-control" id="inputFirstName" placeholder="First">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="formLabel" for="lastName">Last Name</label>
+                                    <label class="formLabel" for="lastName" required>Last Name</label>
                                     <input type="text" class="form-control" id="inputLastName" placeholder="Last">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6 mr-0">
-                                    <label class="formLabel" for="inputEmail">Email</label>
+                                    <label class="formLabel" for="inputEmail" required>Email</label>
                                     <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com">
                                 </div>
                                 <div class="form-group col-md-6">
@@ -149,7 +152,6 @@
                         <fieldset>
                             <div class="d-flex justify-content-center">
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                                <input type="submit" name="submit" class="submit action-button" value="Submit"/>
                             </div>
                         </fieldset>
                          <!-- progressbar -->
@@ -173,6 +175,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous"></script>
+    <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
     <script src="form.js"></script>
 </body>
 </html>

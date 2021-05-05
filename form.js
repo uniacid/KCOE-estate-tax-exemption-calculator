@@ -15,14 +15,29 @@ $(document).ready(function () {
     $('input[type=radio][name=marriedOption]').change(function (e) {
         if (this.value === 'yes') {
             $('.inputMarried').removeClass('offset-5');
-            $('.inputMarried').addClass('offset-2');
+            $('.inputMarried').addClass('offset-1');
+            $('.inputSpouseExemptionOption').removeClass('d-none');
+            $('.inputPriorSpouseExemption').removeClass('d-none');
             $('.inputSpouseExemptionOption').removeClass('d-none');
         }
         if (this.value === 'no') {
             $('.inputMarried').addClass('offset-5');
+            $('.inputPriorSpouseExemption').addClass('d-none');
+            $('.inputSpouseExemptionOption').addClass('d-none');
             $('.inputSpouseExemptionOption').addClass('d-none');
         }
     });
+
+     // Parsley plugin initialization with tweaks to style Parsley for Bootstrap 4
+    $("#exemptionForm").parsley({
+        errorClass: 'is-invalid text-danger',
+        successClass: 'is-valid', // Comment this option if you don't want the field to become green when valid. Recommended in Google material design to prevent too many hints for user experience. Only report when a field is wrong.
+        errorsWrapper: '<div class="invalid-feedback"></div>',
+        errorTemplate: '<span></span>',
+        trigger: 'change'
+    }); /* If you want to validate fields right after page loading, just add this here : .validate()*/
+
+    // Parsley full doc is avalailable here : https://github.com/guillaumepotier/Parsley.js/
 
     //jQuery time
     var current_fs, next_fs, previous_fs; //fieldsets
@@ -30,6 +45,10 @@ $(document).ready(function () {
     var animating; //flag to prevent quick multi-click glitches
 
     $(".next").click(function () {
+        var formValid = $("#exemptionForm").parsley().validate();
+        console.log('formValid', formValid);
+        if (!formValid) return false;
+
         if (animating) return false;
         animating = true;
 
