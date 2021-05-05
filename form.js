@@ -3,6 +3,9 @@ $(document).ready(function () {
         $('.fa').popover({trigger: "hover"});
     });
 
+    $("#inputRange").slider({});
+
+
     //jQuery time
     var current_fs, next_fs, previous_fs; //fieldsets
     var left, opacity, scale; //fieldset properties which we will animate
@@ -16,8 +19,9 @@ $(document).ready(function () {
         next_fs = $(this).parent().parent().next();
 
         //activate next step on progressbar using the index of next_fs
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        // $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
+        // $("#progressbar").hide();
         //show the next fieldset
         next_fs.show();
         //hide the current fieldset with style
@@ -32,6 +36,7 @@ $(document).ready(function () {
                 left = (now * 50) + "%";
                 //3. increase opacity of next_fs to 1 as it moves in
                 opacity = 1 - now;
+
                 current_fs.css({
                     'transform': 'scale(' + scale + ')',
                     'position': 'absolute'
@@ -45,6 +50,7 @@ $(document).ready(function () {
             complete: function () {
                 current_fs.hide();
                 animating = false;
+                // $("#progressbar").show();
             },
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
@@ -59,8 +65,9 @@ $(document).ready(function () {
         previous_fs = $(this).parent().parent().prev();
 
         //de-activate current step on progressbar
-        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+        // $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
+        // $("#progressbar").hide();
         //show the previous fieldset
         previous_fs.show();
         //hide the current fieldset with style
@@ -76,15 +83,16 @@ $(document).ready(function () {
                 //3. increase opacity of previous_fs to 1 as it moves in
                 opacity = 1 - now;
                 current_fs.css({
-                    'left': left,
+                    'left': left
                 });
                 previous_fs.css({
                     'transform': 'scale(' + scale + ')',
-                    'opacity': opacity
+                    'opacity': opacity,
                 });
             },
             duration: 800,
             complete: function () {
+                // $("#progressbar").show();
                 current_fs.hide();
                 animating = false;
             },
