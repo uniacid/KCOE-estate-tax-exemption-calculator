@@ -2,9 +2,27 @@ $(document).ready(function () {
     $(function () {
         $('.fa').popover({trigger: "hover"});
     });
-
+    // Mask inputs
+    $('#inputPhone').mask("(000) 000-0000", {placeholder: "(___) ___-____"});
+    $('#inputEmail').mask("A", {
+        translation: {
+            "A": { pattern: /[\w@\-.+]/, recursive: true }
+        }
+    });
+    // Range slider
     $("#inputRange").slider({});
-
+    // Show additional options based on value
+    $('input[type=radio][name=marriedOption]').change(function (e) {
+        if (this.value === 'yes') {
+            $('.inputMarried').removeClass('offset-5');
+            $('.inputMarried').addClass('offset-2');
+            $('.inputSpouseExemptionOption').removeClass('d-none');
+        }
+        if (this.value === 'no') {
+            $('.inputMarried').addClass('offset-5');
+            $('.inputSpouseExemptionOption').addClass('d-none');
+        }
+    });
 
     //jQuery time
     var current_fs, next_fs, previous_fs; //fieldsets
@@ -53,10 +71,6 @@ $(document).ready(function () {
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
         });
-        // var fieldsetHeight = $('fieldset:visible').height();
-        // var heightOffset = 80;
-        // fieldsetHeight = fieldsetHeight + heightOffset;
-        // $('#exemptionForm').css({height: fieldsetHeight});
 
     });
 
@@ -96,14 +110,12 @@ $(document).ready(function () {
             complete: function () {
                 current_fs.hide();
                 animating = false;
+                $('#progressbar').animate({'margin-top': '100px'}, 0);
+                $('#exemptionForm').animate({height: '0px'}, 0);
             },
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
         });
-        // var fieldsetHeight = $('fieldset:visible').height();
-        // var heightOffset = 80;
-        // fieldsetHeight = fieldsetHeight + heightOffset;
-        // $('#exemptionForm').css({height: fieldsetHeight});
 
     });
 
