@@ -23,30 +23,30 @@
                     <div id="exemptionFormContent" class="row h-100 justify-content-center align-items-center">
                         <!-- fieldsets -->
                         <!-- Step 1 -->
-                        <fieldset>
+                        <fieldset class="form-section">
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="netWorth">Estimated Net Worth - Today</label>
+                                    <label class="formLabel" for="inputNetWorth">Estimated Net Worth - Today</label>
                                     <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">$</div>
                                     </div>
-                                    <input type="text" id="netWorth" class="form-control form-control-sm" required
+                                    <input type="text" id="inputNetWorth" class="form-control form-control-sm" required
                                     data-parsley-required-message="Estimated Net Worth required">
                                 </div>
                             </div>
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="priorExemption">Less: Exemption You Have Previously Used</label>
+                                    <label class="formLabel" for="inputPriorExemption">Less: Exemption You Have Previously Used</label>
                                     <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">$</div>
                                     </div>
-                                    <input type="text" id="priorExemption" class="form-control form-control-sm" required
+                                    <input type="text" id="inputPriorExemption" class="form-control form-control-sm" required
                                     data-parsley-required-message="Exemptions required">
                                 </div>
                             </div>
@@ -69,15 +69,15 @@
                                 </div>
                                 <div class="inputSpouseExemptionOption col-md-6 offset-1 d-none">
                                     <div class="form-group">
-                                        <label class="formLabel" for="spouseExemptionOption">Use Spouse's Exemption</label>
+                                        <label class="formLabel" for="inputSpouseExemptionOption">Use Spouse's Exemption</label>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption1" value="yes">
+                                            <input class="form-check-input" type="radio" name="inputSpouseExemptionOption" id="spouseExemptionOption1" value="yes">
                                             <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="spouseExemptionOption" id="spouseExemptionOption2" value="no">
+                                            <input class="form-check-input" type="radio" name="inputSpouseExemptionOption" id="spouseExemptionOption2" value="no">
                                             <label class="form-check-label" for="spouseExemptionOption2">No</label>
                                         </div>
                                     </div>
@@ -86,14 +86,14 @@
 
                             <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="priorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
+                                    <label class="formLabel" for="inputPriorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
                                     <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">$</div>
                                     </div>
-                                    <input type="text" id="priorSpouseExemption" class="form-control form-control-sm">
+                                    <input type="text" id="inputPriorSpouseExemption" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="inputPriorSpouseExemption form-group d-none">
@@ -119,21 +119,24 @@
                             </div>
                         </fieldset>
                         <!-- Step 2 -->
-                        <fieldset>
+                        <fieldset class="form-section">
                             <div class="form-row mb-3">
                                 <div class="form-group col-md-6">
                                     <label class="formLabel" for="firstName" required>First Name</label>
-                                    <input type="text" class="form-control" id="inputFirstName" placeholder="First">
+                                    <input type="text" class="form-control" id="inputFirstName" placeholder="First" required
+                                    data-parsley-required-message="First Name required">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="formLabel" for="lastName" required>Last Name</label>
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Last">
+                                    <input type="text" class="form-control" id="inputLastName" placeholder="Last" required
+                                    data-parsley-required-message="Last Name required">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6 mr-0">
                                     <label class="formLabel" for="inputEmail" required>Email</label>
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com">
+                                    <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com" required
+                                    data-parsley-required-message="Email required">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="justify-content-between">
@@ -149,7 +152,7 @@
                             </div>
                         </fieldset>
                         <!-- Step 3 -->
-                        <fieldset>
+                        <fieldset class="form-section">
                             <div class="d-flex justify-content-center">
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
                             </div>

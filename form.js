@@ -4,6 +4,9 @@ $(document).ready(function () {
     });
     // Mask inputs
     $('#inputPhone').mask("(000) 000-0000", {placeholder: "(___) ___-____"});
+    $('#inputNetWorth').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputPriorExemption').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputPriorSpouseExemption').mask("000,000,000,000,000.00", {reverse: true});
     $('#inputEmail').mask("A", {
         translation: {
             "A": { pattern: /[\w@\-.+]/, recursive: true }
@@ -43,53 +46,66 @@ $(document).ready(function () {
     var current_fs, next_fs, previous_fs; //fieldsets
     var left, opacity, scale; //fieldset properties which we will animate
     var animating; //flag to prevent quick multi-click glitches
+    // var fieldValid = true;
+    var $sections = $('.form-section');
+
+    function navigateTo(index) {
+        // Mark the current section with the class 'current'
+        $sections.removeClass('current').eq(index).addClass('current');
+    }
+
+    function curIndex() {
+        // Return the current index by looking at which section has the class 'current'
+        return $sections.index($sections.filter('.current'));
+    }
 
     $(".next").click(function () {
-        var formValid = $("#exemptionForm").parsley().validate();
-        console.log('formValid', formValid);
-        if (!formValid) return false;
-
-        if (animating) return false;
-        animating = true;
-
         current_fs = $(this).parent().parent();
         next_fs = $(this).parent().parent().next();
 
-        //activate next step on progressbar using the index of next_fs
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        $('#exemptionForm').parsley().whenValidate({
+            group: 'block-' + curIndex()
+        }).done(function() {
+            if (animating) return false;
+            animating = true;
+            navigateTo(curIndex() + 1);
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50) + "%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
 
-        //show the next fieldset
-        next_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate({
-            opacity: 0
-        }, {
-            step: function (now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale current_fs down to 80%
-                scale = 1 - (1 - now) * 0.2;
-                //2. bring next_fs from the right(50%)
-                left = (now * 50) + "%";
-                //3. increase opacity of next_fs to 1 as it moves in
-                opacity = 1 - now;
-
-                current_fs.css({
-                    'transform': 'scale(' + scale + ')',
-                    'position': 'absolute'
-                });
-                next_fs.css({
-                    'left': left,
-                    'opacity': opacity
-                });
-            },
-            duration: 800,
-            complete: function () {
-                current_fs.hide();
-                animating = false;
-            },
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
+                    current_fs.css({
+                        'transform': 'scale(' + scale + ')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({
+                        'left': left,
+                        'opacity': opacity
+                    });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
         });
+
+
 
     });
 
@@ -99,6 +115,7 @@ $(document).ready(function () {
 
         current_fs = $(this).parent().parent();
         previous_fs = $(this).parent().parent().prev();
+        navigateTo(curIndex() - 1);
 
         //de-activate current step on progressbar
         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
@@ -141,4 +158,10 @@ $(document).ready(function () {
     $(".submit").click(function () {
         return false;
     });
+
+    // Prepare sections by setting the `data-parsley-group` attribute to 'block-0', 'block-1', etc.
+    $sections.each(function(index, section) {
+        $(section).find(':input').attr('data-parsley-group', 'block-' + index);
+    });
+    navigateTo(0);
 });
