@@ -17,17 +17,26 @@ $(document).ready(function () {
     // Show additional options based on value
     $('input[type=radio][name=marriedOption]').change(function (e) {
         if (this.value === 'yes') {
-            $('.inputMarried').removeClass('offset-5');
-            $('.inputMarried').addClass('offset-1');
+            $('.inputMarried').removeClass('offset-lg-1');
+            $('.inputMarried').addClass('offset-lg-2');
+            $('.inputMarried').removeClass('offset-md-2');
+            $('.inputMarried').addClass('offset-md-1');
+            $('.inputMarried').removeClass('col-md-6');
+            $('.inputMarried').addClass('col-md-5');
             $('.inputSpouseExemptionOption').removeClass('d-none');
+            $('.inputPrenuptialAgreement').removeClass('d-none');
             $('.inputPriorSpouseExemption').removeClass('d-none');
-            $('.inputSpouseExemptionOption').removeClass('d-none');
         }
         if (this.value === 'no') {
-            $('.inputMarried').addClass('offset-5');
+            $('.inputMarried').removeClass('offset-lg-2');
+            $('.inputMarried').addClass('offset-lg-1');
+            $('.inputMarried').removeClass('offset-md-1');
+            $('.inputMarried').addClass('offset-md-2');
+            $('.inputMarried').addClass('col-md-6');
+            $('.inputMarried').removeClass('col-md-5');
             $('.inputPriorSpouseExemption').addClass('d-none');
             $('.inputSpouseExemptionOption').addClass('d-none');
-            $('.inputSpouseExemptionOption').addClass('d-none');
+            $('.inputPrenuptialAgreement').addClass('d-none');
         }
     });
 
@@ -164,4 +173,38 @@ $(document).ready(function () {
         $(section).find(':input').attr('data-parsley-group', 'block-' + index);
     });
     navigateTo(0);
+
+    // var chart = am4core.create("chartdiv", am4charts.PieChart);
+    // var chart;
+
+    am4core.useTheme(am4themes_animated);
+
+    var chart = am4core.create("chartdiv", am4charts.PieChart3D);
+    chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+    chart.data = [
+        {
+            country: "Lithuania",
+            litres: 501.9
+        },
+        {
+            country: "Czech Republic",
+            litres: 301.9
+        },
+    ];
+
+    chart.innerRadius = am4core.percent(40);
+    chart.depth = 120;
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "bottom";
+
+    var series = chart.series.push(new am4charts.PieSeries3D());
+    series.dataFields.value = "litres";
+    series.dataFields.depthValue = "litres";
+    series.dataFields.category = "country";
+    series.slices.template.cornerRadius = 5;
+    series.colors.step = 3;
+
+
 });

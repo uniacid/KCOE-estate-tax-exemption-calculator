@@ -24,10 +24,15 @@
                         <!-- fieldsets -->
                         <!-- Step 1 -->
                         <fieldset class="form-section">
+                            <!-- <div class="row">
+                                <div id="chartdiv"></div>
+                            </div> -->
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="inputNetWorth">Estimated Net Worth - Today</label>
-                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    <label class="formLabel" for="inputNetWorth">
+                                        Estimated Net Worth - Today
+                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    </label>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
@@ -39,8 +44,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="inputPriorExemption">Less: Exemption You Have Previously Used</label>
-                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    <label class="formLabel" for="inputPriorExemption">
+                                        Less: Exemption You Have Previously Used
+                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    </label>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
@@ -50,8 +57,8 @@
                                     data-parsley-required-message="Exemptions required">
                                 </div>
                             </div>
-                            <div class="row no-gutters">
-                                <div class="inputMarried col-md-4 offset-5">
+                            <div class="row justify-content-center">
+                                <div class="inputMarried col-12 col-sm-6 col-md-6 col-lg-4 col-xl-5 offset-sm-3 offset-md-2 offset-lg-1 offset-xl-1">
                                     <div class="form-group">
                                         <label class="formLabel" for="marriedOption">Are You Married?</label>
                                     </div>
@@ -67,11 +74,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="inputSpouseExemptionOption col-md-6 offset-1 d-none">
+                                <div class="inputPrenuptialAgreement col-12 col-sm-6 col-md-6 col-lg-6 offset-lg-0 col-xl-6 offset-xl-0 d-none">
                                     <div class="form-group">
-                                        <label class="formLabel" for="inputSpouseExemptionOption">Use Spouse's Exemption</label>
+                                        <label class="formLabel" for="inputPrenuptialAgreement">Prenuptial agreement?</label>
                                     </div>
                                     <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inputPrenuptialAgreement" id="inputPrenuptialAgreement1" value="yes">
+                                            <label class="form-check-label" for="inputPrenuptialAgreement1">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inputPrenuptialAgreement" id="inputPrenuptialAgreement2" value="no">
+                                            <label class="form-check-label" for="inputPrenuptialAgreement2">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-gutters">
+                                <div class="inputSpouseExemptionOption col-md-12 d-none">
+                                    <div class="form-group row justify-content-center">
+                                        <label class="formLabel text-center" for="inputSpouseExemptionOption">
+                                            Use Spouse's Exemption?
+                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                            <br> (Select <strong>No</strong> if you have a prenuptial agreement</label>
+                                    </div>
+                                    <div class="form-group row justify-content-center">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="inputSpouseExemptionOption" id="spouseExemptionOption1" value="yes">
                                             <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
@@ -86,8 +114,10 @@
 
                             <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-between ml-0 mr-0">
-                                    <label class="formLabel" for="inputPriorSpouseExemption">Less: Exemption Your Spouse has Previously Used</label>
-                                    <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    <label class="formLabel" for="inputPriorSpouseExemption">
+                                        Less: Exemption Your Spouse has Previously Used
+                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                    </label>
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
@@ -97,10 +127,10 @@
                                 </div>
                             </div>
                             <div class="inputPriorSpouseExemption form-group d-none">
-                                <div class="row justify-content-center">
+                                <!-- <div class="row justify-content-center">
                                     <label class="formLabel" for="priorSpouseExemption">Pre-nuptial agreement</label>
-                                </div>
-                                <div>
+                                </div> -->
+                                <!-- <div>
                                     <div class="row justify-content-between ml-0 mr-0">
                                         <span>You</span>
                                         <span>Spouse</span>
@@ -112,7 +142,7 @@
                                         <span>50%</span>
                                         <span>50%</span>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="d-flex justify-content-center">
                                 <input type="button" name="next" class="next action-button" value="Next"/>
@@ -147,14 +177,14 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="button" name="previous" class="previous action-button" value="Previous"/>
                                 <input type="button" name="next" class="next action-button" value="Next"/>
                             </div>
                         </fieldset>
                         <!-- Step 3 -->
                         <fieldset class="form-section">
                             <div class="d-flex justify-content-center">
-                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="button" name="previous" class="previous action-button" value="Previous"/>
                             </div>
                         </fieldset>
                          <!-- progressbar -->
@@ -179,6 +209,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous"></script>
     <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script src="form.js"></script>
 </body>
 </html>
