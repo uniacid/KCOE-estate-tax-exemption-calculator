@@ -16,17 +16,20 @@
     <div class="container-fluid h-100">
         <!-- MultiStep Form -->
         <div class="row no-gutters h-100 justify-content-center align-items-center">
-            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-4">
+            <div class="form-container col-sm-12 col-md-8 col-lg-8 col-xl-4">
                 <form id="exemptionForm">
-                    <h3 class="text-center">Lorem ipsum dolor sit amet</h3>
-                    <h6 class="text-center">Lorem ipsum dolor sit amet, consectetur adip quis nostrud exercitation</h6>
+                    <div class="header-title">
+                        <h3 class="text-center">Lorem ipsum dolor sit amet</h3>
+                        <h6 class="text-center">Lorem ipsum dolor sit amet, consectetur adip quis nostrud exercitation</h6>
+                    </div>
+                    <div class="header-title-step3 d-none">
+                        <h3 class="text-center">Thank You, John Doe!</h3>
+                        <h6 class="text-center">Overview of Estate Tax Exposure - Apr 2021</h6>
+                    </div>
                     <div id="exemptionFormContent" class="row h-100 justify-content-center align-items-center">
                         <!-- fieldsets -->
                         <!-- Step 1 -->
                         <fieldset class="form-section">
-                            <!-- <div class="row">
-                                <div id="chartdiv"></div>
-                            </div> -->
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputNetWorth">
@@ -183,6 +186,168 @@
                         </fieldset>
                         <!-- Step 3 -->
                         <fieldset class="form-section">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <p class="small mb-0"><strong>Estimated Net Worth*</strong></p>
+                                            <small class="text-muted">*Assumes 6% annual growth in net worth</small>
+                                        </div>
+                                        <div class="row col-xl-8">
+                                            <div class="col-xl-4">
+                                                <h6><strong>Today</strong></h6>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <h6><strong>In 5 Years</strong></h6>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <h6><strong>In 15 Years</strong></h6>
+                                            </div>
+
+                                            <hr class="divider"/>
+
+                                            <div class="col-xl-4">
+                                                <h6><strong>Today</strong></h6>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <h6><strong>In 5 Years</strong></h6>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <h6><strong>In 15 Years</strong></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4 mb-4">
+                                        <div id="chartdiv"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <p class="small mb-0"><strong>Other Estate Planning Considerations</strong></p>
+                                            <small class="text-muted">Decreased asset values and historically low interest rates due to COVID-19 make for an ideal time to implement advanced estate planning techniques</small><br>
+                                            <small class="text-muted">Take advantage of this unique time to design/implement your estate plan</small><br>
+                                            <small class="text-muted">Estate planning is a process and not an event, keep reviewing periodically</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="row no-gutters">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <div class="card-header">
+                                                <h3>Lorem ipsum</h3>
+                                                <small class="text-muted">Lorem ipsum dolor sit amet</small>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <label class="formLabel" for="inputNetWorth">
+                                                            Estimated Net Worth - Today
+                                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                          <div class="input-group-text">$</div>
+                                                        </div>
+                                                        <input type="text" id="inputNetWorth" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Estimated Net Worth required">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <label class="formLabel" for="inputNetWorth">
+                                                            Growth Rate of Net Worth
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="inputNetWorth" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Estimated Net Worth required">
+                                                        <div class="input-group-append">
+                                                          <div class="input-group-text">%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <label class="formLabel" for="inputNetWorth">
+                                                            1st Analysis
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="inputNetWorth" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Estimated Net Worth required">
+                                                        <div class="input-group-prepend">
+                                                          <div class="input-group-text">Years</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <label class="formLabel" for="inputNetWorth">
+                                                            2nd Analysis
+                                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="inputNetWorth" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Estimated Net Worth required">
+                                                        <div class="input-group-prepend">
+                                                          <div class="input-group-text">Years</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row justify-content-between ml-0 mr-0">
+                                                        <label class="formLabel" for="inputPriorExemption">
+                                                            Less: Exemption You Have Previously Used
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                          <div class="input-group-text">$</div>
+                                                        </div>
+                                                        <input type="text" id="inputPriorExemption" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Exemptions required">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="form-group row justify-content-center mb-0">
+                                                        <label class="formLabel text-center" for="inputSpouseExemptionOption">
+                                                            Use Spouse's Exemption?
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-group row justify-content-center">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inputSpouseExemptionOption" id="spouseExemptionOption1" value="yes">
+                                                            <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inputSpouseExemptionOption" id="spouseExemptionOption2" value="no">
+                                                            <label class="form-check-label" for="spouseExemptionOption2">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row justify-content-between ml-0 mr-0">
+                                                        <label class="formLabel" for="inputPriorExemption">
+                                                            Less: Exemption Your Spouse has Previously Used
+                                                        </label>
+                                                    </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                                          <div class="input-group-text">$</div>
+                                                        </div>
+                                                        <input type="text" id="inputPriorExemption" class="form-control form-control-sm" required
+                                                        data-parsley-required-message="Exemptions required">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row justify-content-center">
+                                                    <button type="button" class="btn btn-secondary">UPDATE</button>
+                                                </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-center">
                                 <input type="button" name="previous" class="previous action-button" value="Previous"/>
                             </div>

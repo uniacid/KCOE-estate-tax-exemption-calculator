@@ -71,13 +71,25 @@ $(document).ready(function () {
     $(".next").click(function () {
         current_fs = $(this).parent().parent();
         next_fs = $(this).parent().parent().next();
-
         $('#exemptionForm').parsley().whenValidate({
             group: 'block-' + curIndex()
         }).done(function() {
             if (animating) return false;
             animating = true;
             navigateTo(curIndex() + 1);
+            console.log('curindex', curIndex());
+
+            if (curIndex() === 2) {
+                $('.form-container').removeClass('col-xl-4');
+                $('.header-title').addClass('d-none');
+                $('.header-title-step3').removeClass('d-none');
+                $('.form-container').addClass('col-xl-8');
+            } else {
+                $('.form-container').removeClass('col-xl-8');
+                $('.header-title').removeClass('d-none');
+                $('.header-title-step3').addClass('d-none');
+                $('.form-container').addClass('col-xl-4');
+            }
             //activate next step on progressbar using the index of next_fs
             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
             //show the next fieldset
@@ -184,17 +196,17 @@ $(document).ready(function () {
 
     chart.data = [
         {
-            country: "Lithuania",
+            label: "Lithuania",
             litres: 501.9
         },
         {
-            country: "Czech Republic",
+            label: "Czech Republic",
             litres: 301.9
         },
     ];
 
     chart.innerRadius = am4core.percent(40);
-    chart.depth = 120;
+    chart.depth = 64;
 
     chart.legend = new am4charts.Legend();
     chart.legend.position = "bottom";
@@ -202,9 +214,20 @@ $(document).ready(function () {
     var series = chart.series.push(new am4charts.PieSeries3D());
     series.dataFields.value = "litres";
     series.dataFields.depthValue = "litres";
-    series.dataFields.category = "country";
+    series.dataFields.category = "label";
     series.slices.template.cornerRadius = 5;
     series.colors.step = 3;
+
+    // series.alignLabels = false;
+    // series.labels.template.bent = true;
+    // series.labels.template.radius = -20;
+    // series.labels.template.padding(0, 0, 0, 0);
+    // series.labels.template.fill = am4core.color("#fff");
+    series.ticks.template.disabled = true;
+    series.slices.template.tooltipText = "";
+
+    // series.labels.template.disabled = true;
+
 
 
 });
