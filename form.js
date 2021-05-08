@@ -5,9 +5,10 @@ $(document).ready(function () {
     });
     // Mask inputs
     $('#inputPhone').mask("(000) 000-0000", {placeholder: "(___) ___-____"});
-    $('#inputNetWorth').mask("000,000,000,000,000.00", {reverse: true});
-    $('#inputPriorExemption').mask("000,000,000,000,000.00", {reverse: true});
-    $('#inputPriorSpouseExemption').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputNetWorth, #chartNetWorth').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputPriorExemption, #chartPriorExemption').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputPriorSpouseExemption, #chartPriorSpouseExemption').mask("000,000,000,000,000.00", {reverse: true});
+    $('#chartFirstAnalysis, #chartSecondAnalysis').mask("000", {reverse: true});
     $('#inputEmail').mask("A", {
         translation: {
             "A": { pattern: /[\w@\-.+]/, recursive: true }
@@ -56,6 +57,7 @@ $(document).ready(function () {
     var left, opacity, scale; //fieldset properties which we will animate
     var animating; //flag to prevent quick multi-click glitches
     var $sections = $('.form-section');
+    // Input vars
     var $inputNetWorth = $('#inputNetWorth');
     var $inputPriorExemption = $('#inputPriorExemption');
     var $inputMarriedOption = $('input[type=radio][name=marriedOption]');
@@ -66,11 +68,22 @@ $(document).ready(function () {
     var $inputLastName = $('#inputLastName');
     var $inputEmail = $('#inputEmail');
     var $inputPhone = $('#inputPhone');
+    // Create chart instance
+    var chart = am4core.create("chartdiv", am4charts.XYChart);
+    // Chart input vars
+    var $chartNetWorth = $('#chartNetWorth');
+    var $chartNetworthGrowthRate = $('#chartNetworthGrowthRate');
+    var $chartFirstAnalysis = $('#chartFirstAnalysis');
+    var $chartSecondAnalysis = $('#chartSecondAnalysis');
+    var $chartPriorExemption = $('#chartPriorExemption');
+    var $chartSpouseExemptionOption = $('input[type=radio][name=chartSpouseExemptionOption]:checked');
+    var $chartPriorSpouseExemption = $('#chartPriorSpouseExemption');
+    // Data
     var expectedNetworthGrowth = [];
     var expectedNetworthExposure = [];
     var chartData = [];
     var estateTaxRate = 0.06;
-    $inputNetWorth.val(15000000);
+    // $inputNetWorth.val(15000000);
     setupChartView();
 
     // Mark the current section with the class 'current'
@@ -83,13 +96,22 @@ $(document).ready(function () {
         return $sections.index($sections.filter('.current'));
     }
     // Get exemption value
-    function getExemptions() {
+    function getExemptions(step) {
         var exemptionAmount = 3500000;
-        var initialExemption = ($inputPriorExemption.val() > 0 ? exemptionAmount - $inputPriorExemption.val() : exemptionAmount);
-        if ($inputUseSpouseExemptionOption.val() === 'yes') {
-            return initialExemption + ($inputPriorSpouseExemption.val() > 0 ? exemptionAmount - $inputPriorSpouseExemption.val() : exemptionAmount);
+        if (step !== 3) {
+            var initialExemption = ($inputPriorExemption.val() > 0 ? exemptionAmount - $inputPriorExemption.val() : exemptionAmount);
+            if ($inputUseSpouseExemptionOption.val() === 'yes') {
+                return initialExemption + ($inputPriorSpouseExemption.val() > 0 ? exemptionAmount - $inputPriorSpouseExemption.val() : exemptionAmount);
+            } else {
+                return initialExemption;
+            }
         } else {
-            return initialExemption;
+            var initialExemption = ($chartPriorExemption.val() > 0 ? exemptionAmount - $chartPriorExemption.val() : exemptionAmount);
+            if ($chartSpouseExemptionOption.val() === 'yes') {
+                return initialExemption + ($chartPriorSpouseExemption.val() > 0 ? exemptionAmount - $chartPriorSpouseExemption.val() : exemptionAmount);
+            } else {
+                return initialExemption;
+            }
         }
     }
 
@@ -114,8 +136,6 @@ $(document).ready(function () {
         console.log('currentExemptions', currentExemptions);
         return (compoundNetworth - currentExemptions) * taxRate;
     }
-    var c = calcTaxExposure(15000000, estateTaxRate, 5);
-    console.log('calc', c);
 
     function setupChartView() {
         var fullName = $inputFirstName.val() + ' ' + $inputLastName.val();
@@ -126,15 +146,29 @@ $(document).ready(function () {
         $('.namePlaceholder').text(fullName);
         $('.datePlaceholder').text(month + ' ' + year);
         // calc current and future networth
-        var currentExposure = calcTaxExposure(totalNetworth, estateTaxRate, 1);
-        var fiveYearExposure = calcTaxExposure(totalNetworth, estateTaxRate, 5);
-        var fifteenYearExposure = calcTaxExposure(totalNetworth, estateTaxRate, 15);
-
         $('.networthToday').text(formatCurrency(totalNetworth));
         $('.networthInFiveYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 5)));
         $('.networthInFifteenYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 15)));
         // set data
         chartData = generateExpectedNetworthExposure(totalNetworth);
+        chart.data = chartData;
+    }
+
+    function updateChartView() {
+        var totalNetworth = $chartNetWorth.val();
+        var newEstateTaxRate = $chartNetworthGrowthRate.val();
+        var newFirstYear = $chartFirstAnalysis.val();
+        var newSecondYear = $chartSecondAnalysis.val();
+        var newPriorExemption = $chartPriorExemption.val();
+        var newPriorSpouseExemption = $chartPriorSpouseExemption.val();
+        var useSpouseExemptionOption = $chartSpouseExemptionOption.val();
+        // calc current and future networth
+        $('.networthToday').text(formatCurrency(totalNetworth));
+        $('.networthInFiveYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 5)));
+        $('.networthInFifteenYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 15)));
+        // set data
+        chartData = generateExpectedNetworthExposure(totalNetworth);
+        chart.data = chartData;
     }
 
     // Next button click event
@@ -147,7 +181,6 @@ $(document).ready(function () {
             if (animating) return false;
             animating = true;
             navigateTo(curIndex() + 1);
-            console.log('curindex', curIndex());
 
             if (curIndex() === 2) {
                 $('.form-container').removeClass('col-xl-4');
@@ -247,8 +280,12 @@ $(document).ready(function () {
 
     });
 
-    $(".submit").click(function () {
-        return false;
+    // $(".submit").click(function () {
+    //     return false;
+    // });
+
+    $("#updateChartView").click(function () {
+        updateChartView();
     });
 
     // Prepare sections by setting the `data-parsley-group` attribute to 'block-0', 'block-1', etc.
@@ -257,115 +294,40 @@ $(document).ready(function () {
     });
     navigateTo(0);
 
-    // Pie Chart setup
-    // am4core.useTheme(am4themes_animated);
-
-    // var chart = am4core.create("chartdiv", am4charts.PieChart3D);
-    // chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-
-    // chart.data = [
-    //     {
-    //         label: "Lithuania",
-    //         litres: 501.9
-    //     },
-    //     {
-    //         label: "Czech Republic",
-    //         litres: 301.9
-    //     },
-    // ];
-
-    // chart.innerRadius = am4core.percent(40);
-    // chart.depth = 64;
-    // chart.legend = new am4charts.Legend();
-    // chart.legend.position = "bottom";
-
-    // var series = chart.series.push(new am4charts.PieSeries3D());
-    // series.dataFields.value = "litres";
-    // series.dataFields.depthValue = "litres";
-    // series.dataFields.category = "label";
-    // series.slices.template.cornerRadius = 5;
-    // series.colors.step = 3;
-    // series.ticks.template.disabled = true;
-    // series.slices.template.tooltipText = "";
-
     // Themes begin
     am4core.useTheme(am4themes_kelly);
     am4core.useTheme(am4themes_animated);
     // Themes end
 
-    // Create chart instance
-    var chart = am4core.create("chartdiv", am4charts.XYChart);
-    chart.data = chartData;
-
-    // Create daily series and related axes
-    // var dateAxis1 = chart.xAxes.push(new am4charts.DateAxis());
-    // dateAxis1.renderer.grid.template.location = 0;
-    // dateAxis1.renderer.minGridDistance = 40;
-
-    // var valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
-
-    // var series1 = chart.series.push(new am4charts.ColumnSeries());
-    // series1.name = "Estimated Tax Exposure";
-    // series1.dataFields.valueY = "value";
-    // series1.dataFields.dateX = "date";
-    // series1.dataFields.categoryX = "category";
-    // series1.data = expectedNetworthExposure;
-    // series1.xAxis = dateAxis1;
-    // series1.yAxis = valueAxis1;
-    // series1.tooltipText = "{dateX}: [bold]{valueY}[/]";
-
-    // // Create hourly series and related axes
-    // var taxExposureAxis = chart.xAxes.push(new am4charts.DateAxis());
-    // taxExposureAxis.title.text = "Year";
-    // taxExposureAxis.renderer.grid.template.location = 0;
-    // taxExposureAxis.renderer.minGridDistance = 40;
-    // taxExposureAxis.renderer.labels.template.disabled = true;
-    // taxExposureAxis.renderer.grid.template.disabled = true;
-    // taxExposureAxis.renderer.tooltip.disabled = true;
-
-    // var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis2.title.text = "Estimated Networth Growth";
-    // valueAxis2.renderer.opposite = true;
-    // valueAxis2.renderer.grid.template.disabled = true;
-    // valueAxis2.renderer.labels.template.disabled = true;
-    // valueAxis2.renderer.tooltip.disabled = true;
-
-    // var series2 = chart.series.push(new am4charts.LineSeries());
-    // series2.name = "Estimated Networth Growth*";
-    // series2.dataFields.valueY = "value";
-    // series2.dataFields.dateX = "date";
-    // series2.data = expectedNetworthGrowth;
-    // series2.xAxis = taxExposureAxis;
-    // series2.yAxis = valueAxis2;
-    // series2.strokeWidth = 3;
-    // series2.tooltipText = "{dateX}: [bold]{valueY}[/]";
-
     // Create axes
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "date";
     categoryAxis.title.text = "Year";
+    categoryAxis.cursorTooltipEnabled = false;
 
     // First value axis
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "Estimated Networth Growth*";
+    valueAxis.cursorTooltipEnabled = false;
 
     // Second value axis
     var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis2.title.text = "Estimated Tax Exposure";
     valueAxis2.renderer.opposite = true;
+    valueAxis2.cursorTooltipEnabled = false;
 
     // First series
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = "networthGrowth";
     series.dataFields.categoryX = "date";
-    series.name = "Estimated Tax Exposure";
+    series.name = "Estimated Networth Growth*";
     series.tooltipText = "{name}: [bold]{valueY}[/]";
 
     // Second series
     var series2 = chart.series.push(new am4charts.LineSeries());
     series2.dataFields.valueY = "taxExposure";
     series2.dataFields.categoryX = "date";
-    series2.name = "Estimated Networth Growth*";
+    series2.name = "Estimated Tax Exposure";
     series2.tooltipText = "{name}: [bold]{valueY}[/]";
     series2.strokeWidth = 3;
     series2.yAxis = valueAxis2;
@@ -419,26 +381,7 @@ $(document).ready(function () {
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();
         var day = currentDate.getDate();
-        // firstDate.setDate(firstDate.getDate() - 10);
-        // for(var i = 0; i < 10 * 24; i++) {
-        //     var newDate = new Date(firstDate);
-        // newDate.setHours(newDate.getHours() + i);
 
-        //     if (i == 0) {
-        //         var value = Math.round(Math.random() * 10) + 1;
-        //     } else {
-        //         var value = Math.round(data[data.length - 1].value / 100 * (90 + Math.round(Math.random() * 20)) * 100) / 100;
-        //     }
-        // data.push({
-        //     date: newDate,
-        //     value: value
-        // });
-        // }
-        // Current exposure
-        //  data.push({
-        //     date: currentDate,
-        //     value: 0
-        // });
          data.push({
             category: 'Estimated Net Worth',
             date: new Date(year + 1, month, day),
