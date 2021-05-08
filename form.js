@@ -83,8 +83,6 @@ $(document).ready(function () {
     var expectedNetworthExposure = [];
     var chartData = [];
     var estateTaxRate = 0.06;
-    // $inputNetWorth.val(15000000);
-    setupChartView();
 
     // Mark the current section with the class 'current'
     function navigateTo(index) {
@@ -99,14 +97,14 @@ $(document).ready(function () {
     function getExemptions(step) {
         var exemptionAmount = 3500000;
         if (step !== 3) {
-            var initialExemption = ($inputPriorExemption.val() > 0 ? exemptionAmount - $inputPriorExemption.val() : exemptionAmount);
+            var initialExemption = ($inputPriorExemption.cleanVal() > 0 ? exemptionAmount - $inputPriorExemption.cleanVal() : exemptionAmount);
             if ($inputUseSpouseExemptionOption.val() === 'yes') {
                 return initialExemption + ($inputPriorSpouseExemption.val() > 0 ? exemptionAmount - $inputPriorSpouseExemption.val() : exemptionAmount);
             } else {
                 return initialExemption;
             }
         } else {
-            var initialExemption = ($chartPriorExemption.val() > 0 ? exemptionAmount - $chartPriorExemption.val() : exemptionAmount);
+            var initialExemption = ($chartPriorExemption.cleanVal() > 0 ? exemptionAmount - $chartPriorExemption.cleanVal() : exemptionAmount);
             if ($chartSpouseExemptionOption.val() === 'yes') {
                 return initialExemption + ($chartPriorSpouseExemption.val() > 0 ? exemptionAmount - $chartPriorSpouseExemption.val() : exemptionAmount);
             } else {
@@ -129,6 +127,7 @@ $(document).ready(function () {
     }
 
     function calcTaxExposure(principal, rate, years) {
+        console.log('calcTaxExposure', [principal, rate, years]);
         var compoundNetworth = calcCompoundNetworth(principal, rate, years);
         console.log('compoundNetworth', compoundNetworth);
         var taxRate = 0.45;
@@ -141,7 +140,8 @@ $(document).ready(function () {
         var fullName = $inputFirstName.val() + ' ' + $inputLastName.val();
         var month = new Date().toLocaleString('default', { month: 'short' });
         var year = new Date().getFullYear();
-        var totalNetworth = $inputNetWorth.val();
+        var totalNetworth = $inputNetWorth.cleanVal();
+        console.log('totalNetworth', totalNetworth);
         // set name
         $('.namePlaceholder').text(fullName);
         $('.datePlaceholder').text(month + ' ' + year);
@@ -152,14 +152,21 @@ $(document).ready(function () {
         // set data
         chartData = generateExpectedNetworthExposure(totalNetworth);
         chart.data = chartData;
+        // set step 3 fields
+        $chartNetWorth.val(totalNetworth);
+        $chartNetworthGrowthRate.val(estateTaxRate);
+        $chartFirstAnalysis.val(5);
+        $chartSecondAnalysis.val(15);
+        $chartPriorExemption.val($inputPriorExemption.val());
+        $chartPriorSpouseExemption.val($inputPriorSpouseExemption.val());
     }
 
     function updateChartView() {
-        var totalNetworth = $chartNetWorth.val();
-        var newEstateTaxRate = $chartNetworthGrowthRate.val();
-        var newFirstYear = $chartFirstAnalysis.val();
-        var newSecondYear = $chartSecondAnalysis.val();
-        var newPriorExemption = $chartPriorExemption.val();
+        var totalNetworth = $chartNetWorth.cleanVal();
+        var newEstateTaxRate = $chartNetworthGrowthRate.cleanVal();
+        var newFirstYear = $chartFirstAnalysis.cleanVal();
+        var newSecondYear = $chartSecondAnalysis.cleanVal();
+        var newPriorExemption = $chartPriorExemption.cleanVal();
         var newPriorSpouseExemption = $chartPriorSpouseExemption.val();
         var useSpouseExemptionOption = $chartSpouseExemptionOption.val();
         // calc current and future networth
