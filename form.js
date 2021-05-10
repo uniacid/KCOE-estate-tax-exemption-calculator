@@ -5,9 +5,9 @@ $(document).ready(function () {
     });
     // Mask inputs
     $('#inputPhone').mask("(000) 000-0000", {placeholder: "(___) ___-____"});
-    $('#inputNetWorth, #chartNetWorth').mask("000,000,000,000,000.00", {reverse: true});
-    $('#inputPriorExemption, #chartPriorExemption').mask("000,000,000,000,000.00", {reverse: true});
-    $('#inputPriorSpouseExemption, #chartPriorSpouseExemption').mask("000,000,000,000,000.00", {reverse: true});
+    $('#inputNetWorth, #chartNetWorth').mask("000,000,000,000,000", {reverse: true});
+    $('#inputPriorExemption, #chartPriorExemption').mask("000,000,000,000,000", {reverse: true});
+    $('#inputPriorSpouseExemption, #chartPriorSpouseExemption').mask("000,000,000,000,000", {reverse: true});
     $('#chartFirstAnalysis, #chartSecondAnalysis').mask("000", {reverse: true});
     $('#inputEmail').mask("A", {
         translation: {
@@ -17,6 +17,13 @@ $(document).ready(function () {
     // Range slider
     $("#inputRange").slider({});
     // Show additional options based on value
+    $('input[type=radio][name=inputUseSpouseExemptionOption]').change(function (e) {
+        if (this.value === 'yes') {
+            $('.inputPriorSpouseExemption').removeClass('d-none');
+        } else {
+            $('.inputPriorSpouseExemption').addClass('d-none');
+        }
+    });
     $('input[type=radio][name=marriedOption]').change(function (e) {
         if (this.value === 'yes') {
             $('.inputMarried').removeClass('offset-lg-1');
@@ -27,7 +34,6 @@ $(document).ready(function () {
             $('.inputMarried').addClass('col-md-5');
             $('.inputUseSpouseExemptionOption').removeClass('d-none');
             $('.inputPrenuptialAgreement').removeClass('d-none');
-            $('.inputPriorSpouseExemption').removeClass('d-none');
         }
         if (this.value === 'no') {
             $('.inputMarried').removeClass('offset-lg-2');
@@ -36,7 +42,6 @@ $(document).ready(function () {
             $('.inputMarried').addClass('offset-md-2');
             $('.inputMarried').addClass('col-md-6');
             $('.inputMarried').removeClass('col-md-5');
-            $('.inputPriorSpouseExemption').addClass('d-none');
             $('.inputUseSpouseExemptionOption').addClass('d-none');
             $('.inputPrenuptialAgreement').addClass('d-none');
         }
@@ -153,7 +158,7 @@ $(document).ready(function () {
         chartData = generateExpectedNetworthExposure(totalNetworth);
         chart.data = chartData;
         // set step 3 fields
-        $chartNetWorth.val(totalNetworth);
+        $chartNetWorth.val($chartNetWorth.masked(totalNetworth));
         $chartNetworthGrowthRate.val(estateTaxRate);
         $chartFirstAnalysis.val(5);
         $chartSecondAnalysis.val(15);
@@ -163,7 +168,7 @@ $(document).ready(function () {
 
     function updateChartView() {
         var totalNetworth = $chartNetWorth.cleanVal();
-        var newEstateTaxRate = $chartNetworthGrowthRate.cleanVal();
+        var newEstateTaxRate = $chartNetworthGrowthRate.val();
         var newFirstYear = $chartFirstAnalysis.cleanVal();
         var newSecondYear = $chartSecondAnalysis.cleanVal();
         var newPriorExemption = $chartPriorExemption.cleanVal();
