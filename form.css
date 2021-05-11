@@ -31,10 +31,10 @@ body {
     border: 0 none;
     border-radius: 0px;
     /* box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4); */
-    padding: 20px 30px;
+    /* padding: 20px 30px; */
     box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
+    width: 100%;
+    /* margin: 0 10%; */
 
     /*stacking fieldsets above each other*/
     position: relative;
@@ -90,7 +90,7 @@ body {
     border-top-right-radius: 0px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    width: 100px;
+    width: 120px;
     background: rgba(255,0,0,0);
     color: #54bce3;
     cursor: pointer;
@@ -255,4 +255,8 @@ body {
 
 .card-body {
     padding: 1rem;
+}
+
+.input-group.input-group-sm > p {
+    margin-bottom: 0;
 }
