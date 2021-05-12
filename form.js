@@ -30,22 +30,26 @@ formJquery(document).ready(function () {
         });
         formJquery('input[type=radio][name=marriedOption]').change(function (e) {
             if (this.value === 'yes') {
-                formJquery('.inputMarried').removeClass('offset-lg-1');
-                formJquery('.inputMarried').addClass('offset-lg-2');
+                formJquery('.inputMarried').removeClass('offset-lg-0');
+                // formJquery('.inputMarried').removeClass('offset-xl-2');
+                formJquery('.inputMarried').addClass('offset-lg-1');
+                // formJquery('.inputMarried').addClass('offset-xl-3');
                 formJquery('.inputMarried').removeClass('offset-md-2');
                 formJquery('.inputMarried').addClass('offset-md-1');
-                formJquery('.inputMarried').removeClass('col-md-6');
-                formJquery('.inputMarried').addClass('col-md-5');
+                formJquery('.inputMarried').removeClass('col-md-5');
+                formJquery('.inputMarried').addClass('col-md-4');
                 formJquery('.inputUseSpouseExemptionOption').removeClass('d-none');
                 formJquery('.inputPrenuptialAgreement').removeClass('d-none');
             }
             if (this.value === 'no') {
-                formJquery('.inputMarried').removeClass('offset-lg-2');
-                formJquery('.inputMarried').addClass('offset-lg-1');
+                // formJquery('.inputMarried').addClass('offset-xl-2');
+                // formJquery('.inputMarried').removeClass('offset-xl-3');
+                formJquery('.inputMarried').removeClass('offset-lg-1');
+                formJquery('.inputMarried').addClass('offset-lg-0');
                 formJquery('.inputMarried').removeClass('offset-md-1');
                 formJquery('.inputMarried').addClass('offset-md-2');
-                formJquery('.inputMarried').addClass('col-md-6');
-                formJquery('.inputMarried').removeClass('col-md-5');
+                formJquery('.inputMarried').addClass('col-md-5');
+                formJquery('.inputMarried').removeClass('col-md-4');
                 formJquery('.inputUseSpouseExemptionOption').addClass('d-none');
                 formJquery('.inputPrenuptialAgreement').addClass('d-none');
             }
@@ -71,7 +75,7 @@ formJquery(document).ready(function () {
     // Input vars
     var inputNetWorth = formJquery('#inputNetWorth');
     var inputPriorExemption = formJquery('#inputPriorExemption');
-    var inputMarriedOption = formJquery('input[type=radio][name=marriedOption]');
+    var inputMarriedOption = formJquery('input[type=radio][name=marriedOption]:checked');
     var inputPrenuptialAgreement = formJquery('input[type=radio][name=inputPrenuptialAgreement]:checked');
     var inputUseSpouseExemptionOption = formJquery('input[type=radio][name=inputUseSpouseExemptionOption]:checked');
     var inputPriorSpouseExemption = formJquery('#inputPriorSpouseExemption');
@@ -94,6 +98,7 @@ formJquery(document).ready(function () {
     var expectedNetworthExposure = [];
     var chartData = [];
     var estateTaxRate = 0.06;
+    var formHasBeenSubmitted = false;
 
     // Mark the current section with the class 'current'
     function navigateTo(index) {
@@ -170,25 +175,60 @@ formJquery(document).ready(function () {
 
     function submitFormValues() {
         // Map form back yo MS Dynamics fields and submit form
-        // entity[ownerid]
-        // entity[new_estimatednetworth]
-        // entity[new_estatecalc_exemptionamt_primary]
-        // entity[kcoe_currentlymarried]
-        // entity[new_estatecalc_usespouseexemption_yn]
-        // entity[new_estatecalc_exemptionamt_secondary]
-        // entity[new_estatecalc_prenuppercentages]
-        // entity[firstname]
-        // entity[lastname]
-        // entity[emailaddress1]'
-        // entity[telephone1]
-        // entity[companyname]
-        // <input type='hidden' id='entity[ownerid]' name='entity[ownerid]' value=' class='form-control'></input>
-        // <input type='hidden' name='form_name' value='entity-form-609971ea8bc2e'>
-        // <input type='hidden' id='_wpnonce' name='_wpnonce' value='3fa7357515'>
-        // <input type='hidden' name='_wp_http_referer' value='/2021-estate-tax-calculator/'>
-        // <input type='hidden' name='entity_form_entity' value='lead'>
-        // <input type='hidden' name='entity_form_name' value='estate calculator lead form'>
-        // <input type='submit' value='Submit' class='btn btn-default' name='entity_form_submit'></input>
+        var formData = buildFormData();
+        // entity[firstname]: Olympia
+        // entity[lastname]: Dickerson
+        // entity[companyname]: Williamson and Hamilton Co
+        // entity[emailaddress1]: zanomi@mailinator.net
+        // entity[telephone1]: +1 (519) 142-3096
+        // entity[new_estimatednetworth]: 10000000
+        // entity[new_estatecalc_exemptionamt_primary]: 0
+        // entity[kcoe_currentlymarried]: 0
+        // entity[new_estatecalc_usespouseexemption_yn]: 0
+        // entity[new_estatecalc_exemptionamt_secondary]: 0
+        // form_name: entity-form-609c19a17bcfc
+        // _wpnonce: 4b131e5b8f
+        // _wp_http_referer: /estate-tax-calculator-2021-dynamics-form/
+        // entity_form_entity: lead
+        // entity_form_name: estate calculator lead form
+        // entity_form_submit: Submit
+
+        formHasBeenSubmitted = true;
+        formJquery.post('https://www.kcoe.com/2021-estate-tax-calculator/', formData)
+        .done(function (result, status, xhr) {
+            console.log('Form submitted successfully', [result, status, xhr]);
+        })
+        .fail(function (xhr, status, error) {
+            console.log('Form submit failed', [xhr, status, error]);
+        });
+    }
+
+    function buildFormData() {
+        var formData = {};
+        var wponce = formJquery('#_wpnonce');
+        var form_name = formJquery('input[name=form_name]');
+        // build form entities with our collected data
+        formData['entity[firstname]'] = (inputFirstName.val() ? inputFirstName.val() : '');
+        formData['entity[lastname]'] = (inputLastName.val() ? inputLastName.val() : '');
+        formData['entity[emailaddress1]'] = (inputEmail.val() ? inputEmail.val() : '');
+        formData['entity[telephone1]'] = (inputPhone.cleanVal() ? inputPhone.cleanVal() : '');
+        formData['entity[companyname]'] = '';
+
+        formData['entity[new_estimatednetworth]'] = (inputNetWorth.cleanVal() ? inputNetWorth.cleanVal() : '0');
+        formData['entity[new_estatecalc_exemptionamt_primary]'] = (inputPriorExemption.cleanVal() ? inputPriorExemption.cleanVal() : '0');
+        formData['entity[new_estatecalc_exemptionamt_secondary]'] = (inputPriorSpouseExemption.cleanVal() ? inputPriorSpouseExemption.cleanVal() : '0');
+
+        formData['entity[kcoe_currentlymarried]'] = (inputMarriedOption.val() === 'yes' ? 1 : 0);
+        formData['entity[new_estatecalc_usespouseexemption_yn]'] = (inputUseSpouseExemptionOption.val() === 'yes' ? 1: 0);
+
+        // Hidden fields
+        formData['entity_form_entity'] = 'lead';
+        formData['entity_form_name'] = 'estate calculator lead form';
+        formData['entity_form_submit'] = 'Submit';
+        formData['form_name'] = (form_name.val() ? form_name.val() : '');
+        formData['_wpnonce'] = (wponce.val() ? wponce.val() : '');
+
+        return formData;
     }
 
     function updateChartView() {
@@ -229,8 +269,14 @@ formJquery(document).ready(function () {
                 formJquery('.header-title').addClass('d-none');
                 formJquery('.header-title-step3').removeClass('d-none');
                 formJquery('.form-container').addClass('col-xl-8').addClass('col-lg-12').addClass('col-md-12');
+                // Setup chart
                 setupChartView();
-            } else {
+                // Submit form
+                if (!formHasBeenSubmitted) {
+                    submitFormValues();
+                }
+            }
+            if (curIndex() < 2) {
                 formJquery('.form-container').removeClass('col-xl-8').removeClass('col-lg-12').removeClass('col-md-12');
                 formJquery('.header-title').removeClass('d-none');
                 formJquery('.header-title-step3').addClass('d-none');
@@ -243,35 +289,6 @@ formJquery(document).ready(function () {
             //hide the current fieldset with style
             current_fs.hide();
             animating = false;
-            // current_fs.animate({
-            //     opacity: 0
-            // }, {
-            //     step: function (now, mx) {
-            //         //as the opacity of current_fs reduces to 0 - stored in 'now'
-            //         //1. scale current_fs down to 80%
-            //         scale = 1 - (1 - now) * 0.2;
-            //         //2. bring next_fs from the right(50%)
-            //         left = (now * 50) + '%';
-            //         //3. increase opacity of next_fs to 1 as it moves in
-            //         opacity = 1 - now;
-
-            //         current_fs.css({
-            //             'transform': 'scale(' + scale + ')',
-            //             'position': 'absolute'
-            //         });
-            //         next_fs.css({
-            //             'left': left,
-            //             'opacity': opacity
-            //         });
-            //     },
-            //     duration: 800,
-            //     complete: function () {
-            //         current_fs.hide();
-            //         animating = false;
-            //     },
-            //     //this comes from the custom easing plugin
-            //     // easing: 'easeInOutBack'
-            // });
         });
 
 
@@ -288,6 +305,13 @@ formJquery(document).ready(function () {
 
         navigateTo(prevIndex);
 
+        if (curIndex() < 2) {
+            formJquery('.form-container').removeClass('col-xl-8').removeClass('col-lg-12').removeClass('col-md-12');
+            formJquery('.header-title').removeClass('d-none');
+            formJquery('.header-title-step3').addClass('d-none');
+            formJquery('.form-container').addClass('col-xl-4').addClass('col-lg-4').addClass('col-md-8');
+        }
+
         //de-activate current step on progressbar
         formJquery('#progressbar li').eq(prevIndex).removeClass('active');
 
@@ -296,36 +320,6 @@ formJquery(document).ready(function () {
         //hide the current fieldset with style
         current_fs.hide();
         animating = false;
-        // current_fs.animate({
-        //     opacity: 0
-        // }, {
-        //     step: function (now, mx) {
-        //         //as the opacity of current_fs reduces to 0 - stored in 'now'
-        //         //1. scale previous_fs from 80% to 100%
-        //         scale = 0.8 + (1 - now) * 0.2;
-        //         //2. take current_fs to the right(50%) - from 0%
-        //         left = ((1 - now) * 50) + '%';
-        //         //3. increase opacity of previous_fs to 1 as it moves in
-        //         opacity = 1 - now;
-        //         current_fs.css({
-        //             'left': left
-        //         });
-        //         previous_fs.css({
-        //             'transform': 'scale(' + scale + ')',
-        //             'opacity': opacity,
-        //         });
-        //     },
-        //     duration: 800,
-        //     complete: function () {
-        //         current_fs.hide();
-        //         animating = false;
-        //         formJquery('#progressbar').animate({'margin-top': '100px'}, 0);
-        //         formJquery('#exemptionForm').animate({height: '0px'}, 0);
-        //     },
-        //     //this comes from the custom easing plugin
-        //     easing: 'easeInOutBack'
-        // });
-
     });
 
     // formJquery('.submit').click(function () {
