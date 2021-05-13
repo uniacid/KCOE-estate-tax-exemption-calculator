@@ -18,8 +18,6 @@ formJquery(document).ready(function () {
                 'A': { pattern: /[\w@\-.+]/, recursive: true }
             }
         });
-        // Range slider
-        // formJquery('#inputRange').slider({});
         // Show additional options based on value
         formJquery('input[type=radio][name=inputUseSpouseExemptionOption]').change(function (e) {
             if (this.value === 'yes') {
@@ -140,6 +138,9 @@ formJquery(document).ready(function () {
     }
 
     function calcCompoundNetworth(principal, rate, years) {
+        if (years === 1) {
+            return principal;
+        }
         return Math.round(principal * Math.pow(1 + rate, years));
     }
 
@@ -147,7 +148,15 @@ formJquery(document).ready(function () {
         var compoundNetworth = calcCompoundNetworth(principal, rate, years);
         var taxRate = 0.45;
         var currentExemptions = getExemptions();
-        return (compoundNetworth - currentExemptions) * taxRate;
+        if (years === 1 && principal < 11700000) {
+            return 0.00;
+        }
+        if (years === 1) {
+            return (principal - currentExemptions) * taxRate;
+        }
+        if (years > 1) {
+            return (compoundNetworth - currentExemptions) * taxRate;
+        }
     }
 
     function setupChartView() {
@@ -337,10 +346,6 @@ formJquery(document).ready(function () {
         animating = false;
     });
 
-    // formJquery('.submit').click(function () {
-    //     return false;
-    // });
-
     formJquery('#updateChartView').click(function () {
         updateChartView();
     });
@@ -377,22 +382,25 @@ formJquery(document).ready(function () {
     valueAxis2.title.text = 'Estimated Estate Tax Exposure';
     valueAxis2.renderer.opposite = true;
     valueAxis2.cursorTooltipEnabled = false;
+    valueAxis2.fill = am4core.color("#FFB2B2");
 
     // First series
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = 'networthGrowth';
     series.dataFields.categoryX = 'date';
     series.name = 'Estimated Net Worth Growth*';
-    series.tooltipText = '{name}: [bold]{valueY}[/]';
+    series.tooltipText = '{name} [bold]${valueY}[/]';
 
     // Second series
     var series2 = chart.series.push(new am4charts.LineSeries());
     series2.dataFields.valueY = 'taxExposure';
     series2.dataFields.categoryX = 'date';
     series2.name = 'Estimated Estate Tax Exposure';
-    series2.tooltipText = '{name}: [bold]{valueY}[/]';
+    series2.tooltipText = '{name} [bold]${valueY}[/]';
     series2.strokeWidth = 3;
+    series2.stroke = am4core.color('#FFB2B2');
     series2.yAxis = valueAxis2;
+    series2.fill = am4core.color("#FFB2B2");
 
     // Legend
     chart.legend = new am4charts.Legend();
