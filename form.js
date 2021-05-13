@@ -81,6 +81,7 @@ formJquery(document).ready(function () {
     var inputPriorSpouseExemption = formJquery('#inputPriorSpouseExemption');
     var inputFirstName = formJquery('#inputFirstName');
     var inputLastName = formJquery('#inputLastName');
+    var inputCompanyName = formJquery('#inputCompanyName');
     var inputEmail = formJquery('#inputEmail');
     var inputPhone = formJquery('#inputPhone');
     // Create chart instance
@@ -212,7 +213,7 @@ formJquery(document).ready(function () {
         formData['entity[lastname]'] = (inputLastName.val() ? inputLastName.val() : '');
         formData['entity[emailaddress1]'] = (inputEmail.val() ? inputEmail.val() : '');
         formData['entity[telephone1]'] = (inputPhone.cleanVal() ? inputPhone.cleanVal() : '');
-        formData['entity[companyname]'] = '';
+        formData['entity[companyname]'] = (inputCompanyName.val() ? inputCompanyName.val() : '');
 
         formData['entity[new_estimatednetworth]'] = (inputNetWorth.cleanVal() ? inputNetWorth.cleanVal() : '0');
         formData['entity[new_estatecalc_exemptionamt_primary]'] = (inputPriorExemption.cleanVal() ? inputPriorExemption.cleanVal() : '0');
@@ -264,9 +265,14 @@ formJquery(document).ready(function () {
             animating = true;
             navigateTo(nextIndex);
 
+            if (curIndex() === 1) {
+                formJquery('.header-title').addClass('d-none');
+                formJquery('.header-title-step2').removeClass('d-none');
+                formJquery('#progressbar li:last-child').addClass('progressbar-active');
+            }
             if (curIndex() === 2) {
                 formJquery('.form-container').removeClass('col-xl-4').removeClass('col-lg-4').removeClass('col-md-8');
-                formJquery('.header-title').addClass('d-none');
+                formJquery('.header-title-step2').addClass('d-none');
                 formJquery('.header-title-step3').removeClass('d-none');
                 formJquery('.form-container').addClass('col-xl-8').addClass('col-lg-12').addClass('col-md-12');
                 // Setup chart
@@ -278,8 +284,6 @@ formJquery(document).ready(function () {
             }
             if (curIndex() < 2) {
                 formJquery('.form-container').removeClass('col-xl-8').removeClass('col-lg-12').removeClass('col-md-12');
-                formJquery('.header-title').removeClass('d-none');
-                formJquery('.header-title-step3').addClass('d-none');
                 formJquery('.form-container').addClass('col-xl-4').addClass('col-lg-4').addClass('col-md-8');
             }
             //activate next step on progressbar using the index of next_fs
@@ -299,21 +303,32 @@ formJquery(document).ready(function () {
         if (animating) return false;
         animating = true;
 
+        var currentIndex = curIndex();
         var prevIndex = curIndex() - 1;
         current_fs = formJquery('fieldset.form-section.current');
         previous_fs = formJquery('fieldset.form-section').eq(prevIndex);
 
         navigateTo(prevIndex);
 
+        if (curIndex() === 0) {
+            formJquery('.header-title').removeClass('d-none');
+            formJquery('.header-title-step2').addClass('d-none');
+            formJquery('#progressbar li:last-child').removeClass('progressbar-active');
+        }
+        if (curIndex() === 1) {
+            formJquery('.header-title-step3').addClass('d-none');
+            formJquery('.header-title-step2').removeClass('d-none');
+        }
+
         if (curIndex() < 2) {
             formJquery('.form-container').removeClass('col-xl-8').removeClass('col-lg-12').removeClass('col-md-12');
-            formJquery('.header-title').removeClass('d-none');
-            formJquery('.header-title-step3').addClass('d-none');
+            // formJquery('.header-title').removeClass('d-none');
+            // formJquery('.header-title-step3').addClass('d-none');
             formJquery('.form-container').addClass('col-xl-4').addClass('col-lg-4').addClass('col-md-8');
         }
 
         //de-activate current step on progressbar
-        formJquery('#progressbar li').eq(prevIndex).removeClass('active');
+        formJquery('#progressbar li').eq(currentIndex).removeClass('active');
 
         //show the previous fieldset
         previous_fs.show();
@@ -354,12 +369,12 @@ formJquery(document).ready(function () {
 
     // First value axis
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = 'Estimated Networth Growth*';
+    valueAxis.title.text = 'Estimated Net Worth Growth*';
     valueAxis.cursorTooltipEnabled = false;
 
     // Second value axis
     var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis2.title.text = 'Estimated Tax Exposure';
+    valueAxis2.title.text = 'Estimated Estate Tax Exposure';
     valueAxis2.renderer.opposite = true;
     valueAxis2.cursorTooltipEnabled = false;
 
@@ -367,14 +382,14 @@ formJquery(document).ready(function () {
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = 'networthGrowth';
     series.dataFields.categoryX = 'date';
-    series.name = 'Estimated Networth Growth*';
+    series.name = 'Estimated Net Worth Growth*';
     series.tooltipText = '{name}: [bold]{valueY}[/]';
 
     // Second series
     var series2 = chart.series.push(new am4charts.LineSeries());
     series2.dataFields.valueY = 'taxExposure';
     series2.dataFields.categoryX = 'date';
-    series2.name = 'Estimated Tax Exposure';
+    series2.name = 'Estimated Estate Tax Exposure';
     series2.tooltipText = '{name}: [bold]{valueY}[/]';
     series2.strokeWidth = 3;
     series2.yAxis = valueAxis2;
@@ -399,21 +414,21 @@ formJquery(document).ready(function () {
         var day = currentDate.getDate();
 
         data.push({
-            category: 'Estimated Tax Exposure',
+            category: 'Estimated Estate Tax Exposure',
             date: 'Current (' + year + ')',
             taxExposure: calcTaxExposure(principal, estateTaxRate, 1),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, 1)
         });
         // 5 yr exposure
         data.push({
-            category: 'Estimated Tax Exposure',
+            category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + 5) + ')',
             taxExposure: calcTaxExposure(principal, estateTaxRate, 5),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, 5)
         });
         // 15 yr exposure
         data.push({
-            category: 'Estimated Tax Exposure',
+            category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + 15) + ')',
             taxExposure: calcTaxExposure(principal, estateTaxRate, 15),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, 15)

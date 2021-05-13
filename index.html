@@ -18,12 +18,16 @@
             <div class="form-container col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4">
                 <form id="exemptionForm">
                     <div class="header-title">
-                        <h3 class="text-center">Lorem ipsum dolor sit amet</h3>
-                        <h6 class="text-center">Lorem ipsum dolor sit amet, consectetur adip quis nostrud exercitation</h6>
+                        <h3 class="text-center">Calculate Your Estate Tax Exposure</h3>
+                        <h6 class="text-center">Copy about the current status of proposed/passed changes to the estate tax exemption. The exemption is indexed for inflation and expected to increase incrementally year to year.</h6>
+                    </div>
+                    <div class="header-title-step2 d-none">
+                        <h3 class="text-center">Enter Your Contact Information</h3>
+                        <h6 class="text-center">Instantly view your results and we will send you a copy of the report for your records.</h6>
                     </div>
                     <div class="header-title-step3 d-none">
-                        <h3 class="text-center">Thank You, <span class="namePlaceholder">John Doe</span>!</h3>
-                        <h6 class="text-center">Overview of Estate Tax Exposure - <span class="datePlaceholder">Apr 2021</span></h6>
+                        <h3 class="text-center">Thank You, <span class="namePlaceholder">John Doe</span></h3>
+                        <h6 class="text-center">Overview Of Your Estate Tax Exposure - <span class="datePlaceholder">Apr 2021</span></h6>
                     </div>
                     <div id="exemptionFormContent" class="row h-100 justify-content-center align-items-center">
                         <!-- fieldsets -->
@@ -33,7 +37,7 @@
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputNetWorth">
                                         Estimated Net Worth - Today
-                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                        <span><i data-content="The gross monetary value of your current assets minus your liabilities." class="fa fa-question-circle"></i></span>
                                     </label>
                                 </div>
                                 <div class="input-group input-group-sm">
@@ -48,7 +52,7 @@
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputPriorExemption">
                                         Less: Exemption You Have Previously Used
-                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                        <span><i data-content="Subtract the exemptions you used last year (allowable debts, expenses, deductions)." class="fa fa-question-circle"></i></span>
                                     </label>
                                 </div>
                                 <div class="input-group input-group-sm">
@@ -78,7 +82,7 @@
                                 </div>
                                 <div class="inputPrenuptialAgreement col-12 col-sm-6 col-md-4 col-lg-5 offset-1 offset-lg-0 col-xl-5 offset-lg-1 offset-xl-0 d-none">
                                     <div class="form-group">
-                                        <label class="formLabel" for="inputPrenuptialAgreement">Prenuptial agreement?</label>
+                                        <label class="formLabel" for="inputPrenuptialAgreement">Prenuptial Agreement?</label>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
@@ -98,8 +102,8 @@
                                     <div class="form-group row justify-content-center">
                                         <label class="formLabel text-center" for="inputUseSpouseExemptionOption">
                                             Use Spouse's Exemption?
-                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
-                                            <br> (Select <strong>No</strong> if you have a prenuptial agreement</label>
+                                            <span><i data-content="(Select No if you have a prenuptial agreement)" class="fa fa-question-circle"></i></span>
+                                        </label>
                                     </div>
                                     <div class="form-group row justify-content-center">
                                         <div class="form-check form-check-inline">
@@ -117,8 +121,8 @@
                             <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputPriorSpouseExemption">
-                                        Less: Exemption Your Spouse has Previously Used
-                                        <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                        Less: Exemption Your Spouse Has Previously Used
+                                        <span><i data-content="Subtract the exemptions your spouse used last year (allowable debts, expenses, deductions)." class="fa fa-question-circle"></i></span>
                                     </label>
                                 </div>
                                 <div class="input-group input-group-sm">
@@ -146,15 +150,21 @@
                                     data-parsley-required-message="Last Name required">
                                 </div>
                             </div>
+                            <div class="form-row mb-3">
+                                <div class="form-group col-md-12">
+                                    <label class="formLabel" for="inputCompanyName" required>Company Name (if applicable)</label>
+                                    <input type="text" class="form-control" id="inputCompanyName">
+                                </div>
+                            </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6 mr-0">
-                                    <label class="formLabel" for="inputEmail" required>Email</label>
+                                    <label class="formLabel" for="inputEmail" required>Business Email</label>
                                     <input type="email" class="form-control" id="inputEmail" placeholder="valid@email.com" required
                                     data-parsley-required-message="Email required">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="justify-content-between">
-                                        <label class="formLabel" for="inputPhone">Phone</label>
+                                        <label class="formLabel" for="inputPhone">Business Phone</label>
                                         <span>(optional)</span>
                                     </div>
                                     <input type="text" class="form-control" id="inputPhone">
@@ -170,30 +180,30 @@
                             <div class="row">
                                 <div class="col-12 col-sm-8 col-md-12 col-lg-8 col-xl-8">
                                     <div class="row">
-                                        <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                        <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4 mt-4">
                                             <p class="small mb-0"><strong>Estimated Net Worth*</strong></p>
                                             <small class="text-muted">*Assumes 6% annual growth in net worth</small>
                                         </div>
-                                        <div class="row col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                        <div class="row no-gutters col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 mt-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <h6><strong>Today</strong></h6>
                                             </div>
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <h6><strong>In 5 Years</strong></h6>
                                             </div>
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <h6><strong>In 15 Years</strong></h6>
                                             </div>
 
                                             <hr class="divider"/>
 
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <small class="text-muted networthToday">$15,000,000</small>
                                             </div>
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <small class="text-muted networthInFiveYears">$15,000,000</small>
                                             </div>
-                                            <div class="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-4 col-sm-8 col-md-4 col-lg-4 col-xl-4">
                                                 <small class="text-muted networthInFifteenYears">$15,000,000</small>
                                             </div>
                                         </div>
@@ -204,9 +214,9 @@
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <p class="small mb-0"><strong>Other Estate Planning Considerations</strong></p>
-                                            <small class="text-muted">Decreased asset values and historically low interest rates due to COVID-19 make for an ideal time to implement advanced estate planning techniques</small><br>
-                                            <small class="text-muted">Take advantage of this unique time to design/implement your estate plan</small><br>
-                                            <small class="text-muted">Estate planning is a process and not an event, keep reviewing periodically</small>
+                                            <small class="text-muted">Decreased asset values and historically low interest rates due to COVID-19 make this an ideal time to implement advanced estate planning techniques</small><br>
+                                            <small class="text-muted">Ask us how to design/implement your estate plan during this unique time in order to protect your exposure.</small><br>
+                                            <small class="text-muted">Estate planning is a process and not an event, keep reviewing periodically and reach out to your rep at KCOE if you have any questions or concerns. We are happy to help.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -217,15 +227,15 @@
                                     <div>
                                         <div class="card bg-light mb-3">
                                             <div class="card-header">
-                                                <h3>Lorem ipsum</h3>
-                                                <small class="text-muted">Lorem ipsum dolor sit amet</small>
+                                                <h3>Calculate Your Exposure</h3>
+                                                <small class="text-muted">Consider the Increases of your Estate Tax Risk Today and down the road</small>
                                             </div>
                                             <div class="card-body row">
                                                 <div class="form-group col-md-6 col-lg-12">
                                                     <div class="input-group input-group-sm">
                                                         <label class="formLabel" for="chartNetWorth">
                                                             Estimated Net Worth - Today
-                                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                                            <span><i data-content="The gross monetary value of your current assets minus your liabilities." class="fa fa-question-circle"></i></span>
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
@@ -268,7 +278,7 @@
                                                     <div class="input-group input-group-sm">
                                                         <label class="formLabel" for="chartSecondAnalysis">
                                                             2nd Analysis
-                                                            <span><i data-content="Lorem ipsum dolor sit amet, consectetur adip" class="fa fa-question-circle"></i></span>
+                                                            <span><i data-content="The exemption is indexed for inflation and expected to increase incrementally year to year." class="fa fa-question-circle"></i></span>
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
@@ -302,18 +312,18 @@
                                                     <div class="form-group row justify-content-center">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" name="chartSpouseExemptionOption" id="spouseExemptionOption1" value="yes">
-                                                            <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
+                                                            <label class="form-check-label small" for="spouseExemptionOption1">Yes</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" name="chartSpouseExemptionOption" id="spouseExemptionOption2" value="no">
-                                                            <label class="form-check-label" for="spouseExemptionOption2">No</label>
+                                                            <label class="form-check-label small" for="spouseExemptionOption2">No</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-4 col-lg-12">
                                                     <div class="row justify-content-between ml-0 mr-0">
                                                         <label class="formLabel" for="chartPriorSpouseExemption">
-                                                            Less: Exemption Your Spouse has Previously Used
+                                                            Less: Exemption Your Spouse Has Previously Used
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
