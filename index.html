@@ -38,7 +38,7 @@
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputNetWorth">
-                                        Estimated Net Worth - Today
+                                        Current Estimated Net Worth
                                         <span><i data-content="The gross monetary value of your current assets minus your liabilities." class="fa fa-question-circle"></i></span>
                                     </label>
                                 </div>
@@ -53,8 +53,8 @@
                             <div class="form-group mb-3">
                                 <div class="row justify-content-between ml-0 mr-0">
                                     <label class="formLabel" for="inputPriorExemption">
-                                        Less: Exemption You Have Previously Used
-                                        <span><i data-content="Subtract the exemptions you used last year (allowable debts, expenses, deductions)." class="fa fa-question-circle"></i></span>
+                                        Gift tax exemption previously used
+                                        <span><i data-content="Gifts made in excess of annual exclusion amount ($15,000 for 2021). If you have filed a gift tax return (Form 709), use amount on Line 3 of most recent gift tax return." class="fa fa-question-circle"></i></span>
                                     </label>
                                 </div>
                                 <div class="input-group input-group-sm">
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="inputPrenuptialAgreement col-12 col-sm-6 col-md-4 col-lg-5 offset-1 offset-lg-0 col-xl-5 offset-lg-1 offset-xl-0 d-none">
+                                <!-- <div class="inputPrenuptialAgreement col-12 col-sm-6 col-md-4 col-lg-5 offset-1 offset-lg-0 col-xl-5 offset-lg-1 offset-xl-0 d-none">
                                     <div class="form-group">
                                         <label class="formLabel" for="inputPrenuptialAgreement">Prenuptial Agreement?</label>
                                     </div>
@@ -96,10 +96,28 @@
                                             <label class="form-check-label" for="inputPrenuptialAgreement2">No</label>
                                         </div>
                                     </div>
+                                </div> -->
+                                <div class="inputUseSpouseExemptionOption col-12 col-sm-6 col-md-4 col-lg-5 offset-1 offset-lg-0 col-xl-5 offset-lg-1 offset-xl-0 d-none">
+                                    <div class="form-group">
+                                        <label class="formLabel" for="inputUseSpouseExemptionOption">
+                                            Use Spouse's Exemption?
+                                            <span><i data-content="Mark no if asset are owned separately from your spouse due to pre-nuptial agreement, blended family, or other reason." class="fa fa-question-circle"></i></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inputUseSpouseExemptionOption" id="spouseExemptionOption1" value="yes">
+                                            <label class="form-check-label" for="spouseExemptionOption1">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inputUseSpouseExemptionOption" id="spouseExemptionOption2" value="no">
+                                            <label class="form-check-label" for="spouseExemptionOption2">No</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row no-gutters">
+                            <!-- <div class="row no-gutters">
                                 <div class="inputUseSpouseExemptionOption col-md-12 mt-2 mb-2 d-none">
                                     <div class="form-group row justify-content-center">
                                         <label class="formLabel text-center" for="inputUseSpouseExemptionOption">
@@ -118,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="inputPriorSpouseExemption form-group d-none">
                                 <div class="row justify-content-between ml-0 mr-0">
@@ -210,6 +228,9 @@
                                         </div>
                                     </div>
                                     <div class="row mt-4 mb-4">
+                                        <div id="piechartdiv"></div>
+                                    </div>
+                                    <div class="row mt-4 mb-4">
                                         <div id="chartdiv"></div>
                                     </div>
                                     <div class="row">
@@ -235,8 +256,8 @@
                                                 <div class="form-group col-md-6 col-lg-12">
                                                     <div class="input-group input-group-sm">
                                                         <label class="formLabel" for="chartNetWorth">
-                                                            Estimated Net Worth - Today
-                                                            <span><i data-content="The gross monetary value of your current assets minus your liabilities." class="fa fa-question-circle"></i></span>
+                                                            Current Estimated Net Worth
+                                                            <span><i data-content="Fair market value of assets minus outstanding liabilities." class="fa fa-question-circle"></i></span>
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
@@ -264,7 +285,7 @@
                                                 <div class="form-group col-md-6 col-lg-12">
                                                     <div class="input-group input-group-sm">
                                                         <label class="formLabel" for="chartFirstAnalysis">
-                                                            1st Analysis
+                                                            Scenario 1/2
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
@@ -278,7 +299,7 @@
                                                 <div class="form-group col-md-6 col-lg-12">
                                                     <div class="input-group input-group-sm">
                                                         <label class="formLabel" for="chartSecondAnalysis">
-                                                            2nd Analysis
+                                                            Pass away in
                                                             <span><i data-content="The exemption is indexed for inflation and expected to increase incrementally year to year." class="fa fa-question-circle"></i></span>
                                                         </label>
                                                     </div>
@@ -293,7 +314,7 @@
                                                 <div class="form-group col-md-4 col-lg-12">
                                                     <div class="row justify-content-between ml-0 mr-0">
                                                         <label class="formLabel" for="chartPriorExemption">
-                                                            Less: Exemption You Have Previously Used
+                                                            Gift tax exemption previously used
                                                         </label>
                                                     </div>
                                                     <div class="input-group input-group-sm">
