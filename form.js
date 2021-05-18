@@ -81,6 +81,7 @@ formJquery(document).ready(function () {
     var inputPhone = formJquery('#inputPhone');
     // Create chart instance
     var chart = am4core.create('chartdiv', am4charts.XYChart);
+    var futureLawChart = am4core.create('futurechartdiv', am4charts.XYChart);
     // Chart input vars
     var chartNetWorth = formJquery('#chartNetWorth');
     var chartNetworthGrowthRate = formJquery('#chartNetworthGrowthRate');
@@ -106,9 +107,13 @@ formJquery(document).ready(function () {
         return sections.index(sections.filter('.current'));
     }
     // Get exemption value
-    function getExemptions(step) {
-        var exemptionAmount = 3500000;
-        if (step !== 3) {
+    function getExemptions(current, updateVals) {
+        var exemptionAmount = 11700000;
+        if (!current) {
+            exemptionAmount = 3500000;
+        }
+        console.log('getExemptions', exemptionAmount);
+        if (!updateVals) {
             var initialExemption = (inputPriorExemption.cleanVal() > 0 ? exemptionAmount - inputPriorExemption.cleanVal() : exemptionAmount);
             if (inputUseSpouseExemptionOption.val() === 'yes') {
                 return initialExemption + (inputPriorSpouseExemption.val() > 0 ? exemptionAmount - inputPriorSpouseExemption.val() : exemptionAmount);
@@ -143,15 +148,22 @@ formJquery(document).ready(function () {
         return Math.round(principal * Math.pow(1 + rate, years) / 1000) * 1000;
     }
 
-    function calcTaxExposure(principal, rate, years) {
+    function calcTaxExposure(principal, rate, years, current, updateVals) {
         var compoundNetworth = calcCompoundNetworth(principal, rate, years);
-        var taxRate = 0.45;
-        var currentExemptions = getExemptions();
-        if (years === 1 && principal < 11700000) {
+        var currentTaxRate = 0.40;
+        var futureTaxRate = 0.45;
+        var taxRate = currentTaxRate;
+        var currentExemptions = getExemptions(current, updateVals);
+        if (!current) {
+            taxRate = futureTaxRate;
+        }
+        if (years === 1 && principal < currentExemptions) {
             return null;
         }
         if (years === 1) {
-            return Math.round((principal - currentExemptions) * taxRate / 1000) * 1000;
+            var exposure = Math.round((principal - currentExemptions) * taxRate / 1000) * 1000;
+            console.log('exposure', [exposure, principal, currentExemptions]);
+            return exposure;
         }
         if (years > 1) {
             return Math.round((compoundNetworth - currentExemptions) * taxRate / 1000) * 1000;
@@ -171,7 +183,7 @@ formJquery(document).ready(function () {
         formJquery('.networthInFiveYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 5)));
         formJquery('.networthInFifteenYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, estateTaxRate, 15)));
         // set data
-        generateExpectedNetworthExposure(totalNetworth, null, 5, 15);
+        generateExpectedNetworthExposure(totalNetworth, null, 5, 15, false);
 
         // set step 3 fields
         chartNetWorth.val(chartNetWorth.masked(totalNetworth));
@@ -251,7 +263,7 @@ formJquery(document).ready(function () {
         formJquery('.networthInFiveYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, newEstateTaxRate, newFirstYear)));
         formJquery('.networthInFifteenYears').text(formatCurrency(calcCompoundNetworth(totalNetworth, newEstateTaxRate, newSecondYear)));
         // set data
-        generateExpectedNetworthExposure(totalNetworth, newEstateTaxRate, newFirstYear, newSecondYear);
+        generateExpectedNetworthExposure(totalNetworth, newEstateTaxRate, newFirstYear, newSecondYear, true);
     }
 
     // Next button click event
@@ -363,28 +375,28 @@ formJquery(document).ready(function () {
     // Themes end
 
     // Pie Chart setup
-    var pieChart = am4core.create("piechartdiv", am4charts.PieChart3D);
-    pieChart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-    pieChart.innerRadius = am4core.percent(40);
-    pieChart.depth = 20;
+    // var pieChart = am4core.create('piechartdiv', am4charts.PieChart3D);
+    // pieChart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+    // pieChart.innerRadius = am4core.percent(40);
+    // pieChart.depth = 20;
 
-    var seriesPie = pieChart.series.push(new am4charts.PieSeries3D());
-    seriesPie.dataFields.value = "value";
-    seriesPie.dataFields.depthValue = "value";
-    seriesPie.dataFields.category = "label";
-    seriesPie.slices.template.cornerRadius = 5;
-    seriesPie.colors.step = 3;
-    seriesPie.labels.template.disabled = false;
-    seriesPie.ticks.template.disabled = true;
-    seriesPie.labels.template.text = "${value.value}";
-    seriesPie.labels.template.tooltipText = "{category}: ${value.value}";
-    seriesPie.slices.template.propertyFields.fill = "color";
+    // var seriesPie = pieChart.series.push(new am4charts.PieSeries3D());
+    // seriesPie.dataFields.value = 'value';
+    // seriesPie.dataFields.depthValue = 'value';
+    // seriesPie.dataFields.category = 'label';
+    // seriesPie.slices.template.cornerRadius = 5;
+    // seriesPie.colors.step = 3;
+    // seriesPie.labels.template.disabled = false;
+    // seriesPie.ticks.template.disabled = true;
+    // seriesPie.labels.template.text = '${value.value}';
+    // seriesPie.labels.template.tooltipText = '{category}: ${value.value}';
+    // seriesPie.slices.template.propertyFields.fill = 'color';
 
-    // Legend
-    pieChart.legend = new am4charts.Legend();
-    pieChart.legend.position = 'bottom';
-    pieChart.legend.useDefaultMarker = true;
-    pieChart.legend.valueLabels.template.text = "${value.value}";
+    // // Legend
+    // pieChart.legend = new am4charts.Legend();
+    // pieChart.legend.position = 'bottom';
+    // pieChart.legend.useDefaultMarker = true;
+    // pieChart.legend.valueLabels.template.text = '${value.value}';
 
     // Create axes
     var dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -452,9 +464,77 @@ formJquery(document).ready(function () {
     chart.cursor = new am4charts.XYCursor();
     chart.cursor.xAxis = dateAxis;
 
+    // Future chart
+    // Create axes
+    var futureDateAxis = futureLawChart.xAxes.push(new am4charts.CategoryAxis());
+    futureDateAxis.dataFields.category = 'date';
+    futureDateAxis.title.text = 'Year';
+    futureDateAxis.cursorTooltipEnabled = false;
 
-    function generateExpectedNetworthExposure(principal, newEstateTaxRate, firstYear, secondYear) {
+    // First value axis
+    var futureValueAxis = futureLawChart.yAxes.push(new am4charts.ValueAxis());
+    futureValueAxis.title.text = 'Estimated Net Worth*';
+    futureValueAxis.min = 0;
+    futureValueAxis.strictMinMax = true;
+    futureValueAxis.cursorTooltipEnabled = false;
+    // futureValueAxis.tooltipText = '[bold]${value.value}[/]';
+
+    // Second value axis
+    var futureValueAxis2 = futureLawChart.yAxes.push(new am4charts.ValueAxis());
+    // futureValueAxis2.title.text = 'Estimated Estate Tax Exposure';
+    futureValueAxis2.renderer.opposite = true;
+    futureValueAxis2.min = 0;
+    futureValueAxis2.strictMinMax = true;
+    futureValueAxis2.cursorTooltipEnabled = false;
+    // futureValueAxis2.tooltipText = '[bold]${value.value}[/]';
+    futureValueAxis2.fill = am4core.color('#FFB2B2');
+
+    // First series
+    var futureSeries = futureLawChart.series.push(new am4charts.LineSeries());
+    futureSeries.dataFields.valueY = 'networthGrowth';
+    futureSeries.dataFields.categoryX = 'date';
+    futureSeries.name = 'Estimated Net Worth*';
+    futureSeries.tooltipText = '{name} [bold]${valueY}[/]';
+    futureSeries.strokeWidth = 3;
+    futureSeries.fillOpacity = 0.2;
+    futureSeries.stroke = am4core.color('#66B7DC');
+    // futureSeries.yAxis = valueAxis;
+    futureSeries.fill = am4core.color('#66B7DC');
+    // futureSeries.baseAxis = valueAxis;
+    futureSeries.stacked = true;
+
+    // Second series
+    var futureSeries2 = futureLawChart.series.push(new am4charts.LineSeries());
+    futureSeries2.dataFields.valueY = 'taxExposure';
+    futureSeries2.dataFields.categoryX = 'date';
+    futureSeries2.name = 'Estimated Estate Tax Exposure';
+    futureSeries2.tooltipText = '{name} [bold]${valueY}[/]';
+    futureSeries2.strokeWidth = 3;
+    futureSeries2.fillOpacity = 0.2;
+    futureSeries2.stroke = am4core.color('#FFB2B2');
+    // futureSeries2.yAxis = valueAxis2;
+    futureSeries2.fill = am4core.color('#FFB2B2');
+    // futureSeries2.baseAxis = valueAxis2;
+    futureSeries2.stacked = true;
+    futureSeries2.sequencedInterpolation = true;
+
+    // Legend
+    futureLawChart.legend = new am4charts.Legend();
+    futureLawChart.legend.position = 'bottom';
+    futureLawChart.legend.useDefaultMarker = true;
+    var futureMarkerTemplate = futureLawChart.legend.markers.template;
+    futureMarkerTemplate.width = 40;
+    futureMarkerTemplate.height = 40;
+    futureMarkerTemplate.stroke = am4core.color('#ccc');
+
+    // Add cursor
+    futureLawChart.cursor = new am4charts.XYCursor();
+    futureLawChart.cursor.xAxis = dateAxis;
+
+
+    function generateExpectedNetworthExposure(principal, newEstateTaxRate, firstYear, secondYear, updateVals) {
         var data = [];
+        var futureData = [];
         var currentDate = new Date();
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();
@@ -464,41 +544,64 @@ formJquery(document).ready(function () {
             estateTaxRate = newEstateTaxRate;
         }
         // set pie chart data
-        pieChart.data = [
-            {
-                label: 'Estimated Net Worth',
-                value: calcCompoundNetworth(principal, estateTaxRate, 1),
-                color: am4core.color("#66B7DC")
-            },
-            {
-                label: 'Estimated Estate Tax Exposure - Current (' + year + ')',
-                value: calcTaxExposure(principal, estateTaxRate, 1),
-                color: am4core.color("#FFB2B2")
-            },
-        ];
-
+        // pieChart.data = [
+        //     {
+        //         label: 'Estimated Net Worth',
+        //         value: calcCompoundNetworth(principal, estateTaxRate, 1),
+        //         color: am4core.color('#66B7DC')
+        //     },
+        //     {
+        //         label: 'Estimated Estate Tax Exposure - Current (' + year + ')',
+        //         value: calcTaxExposure(principal, estateTaxRate, 1),
+        //         color: am4core.color('#FFB2B2')
+        //     },
+        // ];
+        // Set chart data
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: 'Current (' + year + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, 1),
+            taxExposure: calcTaxExposure(principal, estateTaxRate, 1, true, updateVals),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, 1)
         });
         // 5 yr exposure
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + firstYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, firstYear),
+            taxExposure: calcTaxExposure(principal, estateTaxRate, firstYear, true, updateVals),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, firstYear)
         });
         // 15 yr exposure
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + secondYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, secondYear),
+            taxExposure: calcTaxExposure(principal, estateTaxRate, secondYear, true, updateVals),
             networthGrowth: calcCompoundNetworth(principal, estateTaxRate, secondYear)
         });
         // set xyaxis chart data
         chart.data = data;
+        // Set future chart data
+        futureData.push({
+            category: 'Estimated Estate Tax Exposure',
+            date: 'Current (' + year + ')',
+            taxExposure: calcTaxExposure(principal, estateTaxRate, 1, false, updateVals),
+            networthGrowth: calcCompoundNetworth(principal, estateTaxRate, 1)
+        });
+        // 5 yr exposure
+        futureData.push({
+            category: 'Estimated Estate Tax Exposure',
+            date: '(' + (year + firstYear) + ')',
+            taxExposure: calcTaxExposure(principal, estateTaxRate, firstYear, false, updateVals),
+            networthGrowth: calcCompoundNetworth(principal, estateTaxRate, firstYear)
+        });
+        // 15 yr exposure
+        futureData.push({
+            category: 'Estimated Estate Tax Exposure',
+            date: '(' + (year + secondYear) + ')',
+            taxExposure: calcTaxExposure(principal, estateTaxRate, secondYear, false, updateVals),
+            networthGrowth: calcCompoundNetworth(principal, estateTaxRate, secondYear)
+        });
+        // set xyaxis chart data
+        futureLawChart.data = futureData;
     }
 
     // function generateExpectedNetworthGrowth(principal) {
