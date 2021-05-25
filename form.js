@@ -121,14 +121,11 @@ formJquery(document).ready(function () {
         if (current) {
             if (years > 1 && years < 5) {
                 exemptionAmount = Math.round((exemptionAmount * (1 + inflationRate)) ^ years);
-                // console.log('exemptionAmount1', exemptionAmount);
             }
             if (years >= 5) {
                 exemptionAmount = Math.round(exemptionSunsetAmount * Math.pow(1 + inflationRate, years + 3) / 10000) * 10000;
-                // console.log('exemptionAmount2', exemptionAmount);
             }
         }
-        // console.log('getExemptions', exemptionAmount);
         if (!updateVals) {
             var initialExemption = (inputPriorExemption.cleanVal() > 0 ? exemptionAmount - inputPriorExemption.cleanVal() : exemptionAmount);
             if (inputUseSpouseExemptionOption === 'yes') {
@@ -138,11 +135,8 @@ formJquery(document).ready(function () {
             }
         } else {
             var initialExemption = (chartPriorExemption.cleanVal() > 0 ? exemptionAmount - chartPriorExemption.cleanVal() : exemptionAmount);
-            // console.log('test', formJquery('input[name=chartSpouseExemptionOption]:checked').val());
-            // console.log('chartPriorSpouseExemption', [exemptionAmount, inputMarriedOption, chartPriorSpouseExemption, chartSpouseExemptionOption, inputUseSpouseExemptionOption]);
             if (chartSpouseExemptionOption === 'yes') {
                 var exempt = initialExemption + (chartPriorSpouseExemption > 0 ? exemptionAmount - chartPriorSpouseExemption : exemptionAmount);
-                // console.log('exempt', exempt);
                 return exempt;
             } else {
                 return initialExemption;
@@ -169,7 +163,6 @@ formJquery(document).ready(function () {
     }
 
     function calcTaxExposure(principal, rate, years, current, updateVals) {
-        // console.log('calcTaxExposure', [principal, rate, years, current, updateVals]);
         var compoundNetworth = calcCompoundNetworth(principal, rate, years);
         var currentTaxRate = 0.40;
         var futureTaxRate = 0.45;
@@ -183,12 +176,10 @@ formJquery(document).ready(function () {
         }
         if (years === 1) {
             var exposure = Math.round((principal - currentExemptions) * taxRate / 1000) * 1000;
-            // console.log('exposure', [exposure, principal, currentExemptions]);
             return (exposure >= 0) ? exposure : null;
         }
         if (years > 1) {
             var exposure = Math.round((compoundNetworth - currentExemptions) * taxRate / 1000) * 1000;
-            // console.log('exposure', [exposure, principal, compoundNetworth, currentExemptions]);
             return (exposure >= 0) ? exposure : null;
         }
     }
@@ -301,10 +292,6 @@ formJquery(document).ready(function () {
         var nextIndex = curIndex() + 1;
         current_fs = formJquery('fieldset.form-section.current');
         next_fs = formJquery('fieldset.form-section').eq(nextIndex);
-        // console.log('nextIndex', nextIndex);
-        // console.log('sections', sections);
-        // console.log('current_fs', current_fs);
-        // console.log('next_fs', next_fs);
         formJquery('#exemptionForm').parsley().whenValidate({
             group: 'block-' + curIndex()
         }).done(function() {
@@ -569,7 +556,6 @@ formJquery(document).ready(function () {
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();
         var day = currentDate.getDate();
-        // console.log('newEstateTaxRate', newEstateTaxRate);
         if (newEstateTaxRate > 0) {
             estateTaxRate = newEstateTaxRate;
         }
