@@ -71,8 +71,6 @@ formJquery(document).ready(function () {
     // Input vars
     var inputNetWorth = formJquery('#inputNetWorth');
     var inputPriorExemption = formJquery('#inputPriorExemption');
-    // var inputMarriedOption = formJquery('input[name="marriedOption"]:checked');
-    // var inputUseSpouseExemptionOption = formJquery('input[name="inputUseSpouseExemptionOption"]:checked');
     var inputPriorSpouseExemption = formJquery('#inputPriorSpouseExemption');
     var inputFirstName = formJquery('#inputFirstName');
     var inputLastName = formJquery('#inputLastName');
@@ -88,7 +86,6 @@ formJquery(document).ready(function () {
     var chartFirstAnalysis = formJquery('#chartFirstAnalysis');
     var chartSecondAnalysis = formJquery('#chartSecondAnalysis');
     var chartPriorExemption = formJquery('#chartPriorExemption');
-    // var chartSpouseExemptionOption = formJquery('input[name=chartSpouseExemptionOption]:checked');
     var chartPriorSpouseExemption = formJquery('#chartPriorSpouseExemption');
     // Data
     var expectedNetworthGrowth = [];
@@ -120,10 +117,10 @@ formJquery(document).ready(function () {
         }
         if (current) {
             if (years > 1 && years < 5) {
-                exemptionAmount = Math.round((exemptionAmount * (1 + inflationRate)) ^ years);
+                exemptionAmount = Math.round((exemptionAmount) ^ years);
             }
             if (years >= 5) {
-                exemptionAmount = Math.round(exemptionSunsetAmount * Math.pow(1 + inflationRate, years + 3) / 10000) * 10000;
+                exemptionAmount = Math.round(exemptionSunsetAmount / 10000) * 10000;
             }
         }
         if (!updateVals) {
@@ -423,7 +420,7 @@ formJquery(document).ready(function () {
 
     // First value axis
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = 'Net Estate to Beneficiaries*';
+    valueAxis.title.text = '';
     valueAxis.min = 0;
     valueAxis.strictMinMax = true;
     valueAxis.cursorTooltipEnabled = false;
@@ -443,7 +440,7 @@ formJquery(document).ready(function () {
     var series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = 'netEstateToBeneficiaries';
     series.dataFields.categoryX = 'date';
-    series.name = 'Net Estate to Beneficiaries*';
+    series.name = 'Net Estate to Beneficiaries';
     series.tooltipText = '{name} [bold]${valueY}[/]';
     series.strokeWidth = 3;
     series.fillOpacity = 0.2;
@@ -490,7 +487,7 @@ formJquery(document).ready(function () {
 
     // First value axis
     var futureValueAxis = futureLawChart.yAxes.push(new am4charts.ValueAxis());
-    futureValueAxis.title.text = 'Net Estate to Beneficiaries*';
+    futureValueAxis.title.text = '';
     futureValueAxis.min = 0;
     futureValueAxis.strictMinMax = true;
     futureValueAxis.cursorTooltipEnabled = false;
@@ -510,7 +507,7 @@ formJquery(document).ready(function () {
     var futureSeries = futureLawChart.series.push(new am4charts.LineSeries());
     futureSeries.dataFields.valueY = 'netEstateToBeneficiaries';
     futureSeries.dataFields.categoryX = 'date';
-    futureSeries.name = 'Net Estate to Beneficiaries*';
+    futureSeries.name = 'Net Estate to Beneficiaries';
     futureSeries.tooltipText = '{name} [bold]${valueY}[/]';
     futureSeries.strokeWidth = 3;
     futureSeries.fillOpacity = 0.2;
@@ -573,26 +570,35 @@ formJquery(document).ready(function () {
         //     },
         // ];
         // Set chart data for current law
+        const currentYrExposure = calcTaxExposure(principal, estateTaxRate, 1, true, updateVals);
+        const compoundYr = calcCompoundNetworth(principal, estateTaxRate, 1);
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: 'Current (' + year + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, 1, true, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, 1) - calcTaxExposure(principal, estateTaxRate, 1, true, updateVals)
+            taxExposure: currentYrExposure,
+            netEstateToBeneficiaries: compoundYr - currentYrExposure
         });
+        formJquery('.estateTaxExposureToday').text(formatCurrency(currentYrExposure));
         // First analysis exposure
+        const firstYrExposure = calcTaxExposure(principal, estateTaxRate, firstYear, true, updateVals);
+        const compoundFirstYr = calcCompoundNetworth(principal, estateTaxRate, firstYear);
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + firstYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, firstYear, true, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, firstYear) - calcTaxExposure(principal, estateTaxRate, firstYear, true, updateVals)
+            taxExposure: firstYrExposure,
+            netEstateToBeneficiaries: compoundFirstYr - firstYrExposure
         });
+        formJquery('.estateTaxExposureInFirstAnalysis').text(formatCurrency(firstYrExposure));
         // Second analysis exposure
+        const secondYrExposure = calcTaxExposure(principal, estateTaxRate, secondYear, true, updateVals);
+        const compoundSecondYr = calcCompoundNetworth(principal, estateTaxRate, secondYear);
         data.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + secondYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, secondYear, true, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, secondYear) - calcTaxExposure(principal, estateTaxRate, secondYear, true, updateVals)
+            taxExposure: secondYrExposure,
+            netEstateToBeneficiaries: compoundSecondYr - secondYrExposure
         });
+        formJquery('.estateTaxExposureInSecondAnalysis').text(formatCurrency(secondYrExposure));
         // set xyaxis chart data
         chart.data = data;
 
