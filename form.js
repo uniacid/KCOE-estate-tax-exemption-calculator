@@ -117,10 +117,10 @@ formJquery(document).ready(function () {
         }
         if (current) {
             if (years > 1 && years < 5) {
-                exemptionAmount = Math.round((exemptionAmount) ^ years);
+                exemptionAmount = Math.round((exemptionAmount * (1 + inflationRate)) ^ years);
             }
             if (years >= 5) {
-                exemptionAmount = Math.round(exemptionSunsetAmount / 10000) * 10000;
+                exemptionAmount = Math.round(exemptionSunsetAmount * Math.pow(1 + inflationRate, years + 3) / 10000) * 10000;
             }
         }
         if (!updateVals) {
