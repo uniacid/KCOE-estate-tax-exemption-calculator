@@ -603,26 +603,32 @@ formJquery(document).ready(function () {
         chart.data = data;
 
         // Set future law chart data
+        const futureCurrentYrExposure = calcTaxExposure(principal, estateTaxRate, 1, false, updateVals);
         futureData.push({
             category: 'Estimated Estate Tax Exposure',
             date: 'Current (' + year + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, 1, false, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, 1) - calcTaxExposure(principal, estateTaxRate, 1, false, updateVals)
+            taxExposure: futureCurrentYrExposure,
+            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, 1) - futureCurrentYrExposure
         });
+        formJquery('.futureEstateTaxExposureToday').text(formatCurrency(futureCurrentYrExposure));
         // First analysis exposure
+        const futureFirstYrExposure = calcTaxExposure(principal, estateTaxRate, firstYear, false, updateVals);
         futureData.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + firstYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, firstYear, false, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, firstYear) - calcTaxExposure(principal, estateTaxRate, firstYear, false, updateVals)
+            taxExposure: futureFirstYrExposure,
+            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, firstYear) - futureFirstYrExposure
         });
+        formJquery('.futureEstateTaxExposureInFirstAnalysis').text(formatCurrency(futureFirstYrExposure));
         // Second analysis exposure
+        const futureSecondYrExposure = calcTaxExposure(principal, estateTaxRate, secondYear, false, updateVals);
         futureData.push({
             category: 'Estimated Estate Tax Exposure',
             date: '(' + (year + secondYear) + ')',
-            taxExposure: calcTaxExposure(principal, estateTaxRate, secondYear, false, updateVals),
-            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, secondYear) - calcTaxExposure(principal, estateTaxRate, secondYear, false, updateVals)
+            taxExposure: futureSecondYrExposure,
+            netEstateToBeneficiaries: calcCompoundNetworth(principal, estateTaxRate, secondYear) - futureSecondYrExposure
         });
+        formJquery('.futureEstateTaxExposureInSecondAnalysis').text(formatCurrency(futureSecondYrExposure));
         // set xyaxis chart data
         futureLawChart.data = futureData;
     }
